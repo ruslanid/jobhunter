@@ -24,8 +24,7 @@ import com.bazooka.jobhunter.service.EntityValidationService;
 
 @RestController
 @RequestMapping("/api")
-//@CrossOrigin(origins = "http://localhost:3000")
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:3000")
 public class JobController {
 	
 	@Autowired

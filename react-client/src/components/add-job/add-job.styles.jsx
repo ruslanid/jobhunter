@@ -32,3 +32,15 @@ export const AddFormContainer = styled.form`
     flex-direction: column;
   }
 `;
+
+export const LoaderContainer = styled.div`
+  height: 40px;
+  width: 8%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  @media (max-width: 800px) {
+    width: 100%;
+  }
+`;

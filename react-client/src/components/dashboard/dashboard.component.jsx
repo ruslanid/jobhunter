@@ -22,8 +22,8 @@ const Dashboard = () => {
 
   return (
     <DashboardContainer>
-      {categories.map(category => (
-        <JobCategory title={category} jobs={jobs[category.toLowerCase()]} />
+      {categories.map((category, index) => (
+        <JobCategory key={index} title={category} jobs={jobs[category.toLowerCase()]} />
 
       ))}
     </DashboardContainer>

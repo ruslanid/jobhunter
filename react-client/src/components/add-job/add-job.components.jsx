@@ -1,15 +1,25 @@
 import React, {useState} from 'react';
-
-import FormInput from '../form-input/form-input.component';
-import CustomButton from '../custom-button/custom-button.component';
+import {connect} from 'react-redux';
+import {createStructuredSelector} from 'reselect';
+import MoonLoader from "react-spinners/MoonLoader";
 
 import {
   AddJobContainer,
   TitleContainer,
-  AddFormContainer
+  AddFormContainer,
+  LoaderContainer
 } from './add-job.styles';
 
-const AddJob = () => {
+import FormInput from '../form-input/form-input.component';
+import CustomButton from '../custom-button/custom-button.component';
+
+import {addJob} from '../../redux/jobs/jobs.actions';
+import { 
+  selectIsAddingJob,
+  selectErrorsForAdding
+} from '../../redux/jobs/jobs.selectors';
+
+const AddJob = ({isAdding, errors, dispatch}) => {
 
   const [jobDetails, setJobDetails] = useState({
     company: '',
@@ -21,6 +31,8 @@ const AddJob = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    const newJob = {...jobDetails};
+    dispatch(addJob(newJob));
   };
 
   const handleChange = event => {
@@ -40,7 +52,7 @@ const AddJob = () => {
               placeholder="Company"
               value={company}
               handleChange={handleChange}
-              required
+              error={errors.company}
           />
           <FormInput
               type="text"
@@ -48,7 +60,7 @@ const AddJob = () => {
               placeholder="Location"
               value={location}
               handleChange={handleChange}
-              required
+              error={errors.location}
           />
           <FormInput
               type="text"
@@ -56,14 +68,24 @@ const AddJob = () => {
               placeholder="Position"
               value={position}
               handleChange={handleChange}
-              required
+              error={errors.position}
           />
-
-          <CustomButton type="submit">Add Job</CustomButton>             
-
+          {
+            isAdding ?
+            (<LoaderContainer>
+              <MoonLoader size={30} color={"gray"} />
+            </LoaderContainer>)
+            :
+            (<CustomButton type="submit">Add Job</CustomButton>)
+          }
         </AddFormContainer>
     </AddJobContainer>
   )
 };
 
-export default AddJob;
+const mapStateToProps = createStructuredSelector({
+  isAdding: selectIsAddingJob,
+  errors: selectErrorsForAdding
+});
+
+export default connect(mapStateToProps)(AddJob);

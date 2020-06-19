@@ -6,10 +6,7 @@ import {
 } from './job-category.styles';
 
 const JobCategory = (props) =>{
-
   const {title, jobs} = props;
-
-  console.log(jobs);
   
   return (
     <CategoryContainer>

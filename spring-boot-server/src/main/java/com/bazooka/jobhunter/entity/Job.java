@@ -24,6 +24,8 @@ public class Job {
 	@NotBlank(message="Company can't be blank")
 	private String company;
 	
+	private String category = "interested";
+	
 	@Email
 	private String email;
 	
@@ -76,6 +78,14 @@ public class Job {
 
 	public void setCompany(String company) {
 		this.company = company;
+	}
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
 	}
 
 	public String getEmail() {
@@ -133,7 +143,13 @@ public class Job {
 	public void setUpdatedAt(String updatedAt) {
 		this.updatedAt = updatedAt;
 	}
-	
-	
+
+	@Override
+	public String toString() {
+		return "Job [id=" + id + ", position=" + position + ", location=" + location + ", company=" + company
+				+ ", category=" + category + ", email=" + email + ", phoneNumber=" + phoneNumber + ", manager="
+				+ manager + ", description=" + description + ", link=" + link + ", createdAt=" + createdAt
+				+ ", updatedAt=" + updatedAt + "]";
+	}
 
 }

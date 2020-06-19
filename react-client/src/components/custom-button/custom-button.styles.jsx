@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 export const CustomButtonContainer = styled.button`
   width: 13%;
+  height: 40px;
   color: white;
   border: 1px solid white;
   font-size: 15px;
