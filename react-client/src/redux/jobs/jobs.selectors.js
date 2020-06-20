@@ -9,5 +9,15 @@ export const selectIsAddingJob = createSelector(
 
 export const selectErrorsForAdding = createSelector(
   [selectJobs],
-  jobs => jobs.errorsForAdding
+  jobs => jobs.errorsAdding
+);
+
+export const selectAllJobs = createSelector(
+  [selectJobs],
+  jobs => jobs.allJobs
+);
+
+export const selectAreJobsLoaded = createSelector(
+  [selectJobs],
+  jobs => !!jobs.allJobs
 )

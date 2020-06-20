@@ -5,9 +5,11 @@ import {
 } from './jobs.utils';
 
 const INITIAL_STATE = {
-  allJobs: [],
+  allJobs: null,
   isAdding: false,
-  errorsForAdding: {}
+  errorsAdding: {},
+  isFetching: false,
+  errorsFetching: {}
 };
 
 const jobsReducer = (state = INITIAL_STATE, action) => {
@@ -22,13 +24,31 @@ const jobsReducer = (state = INITIAL_STATE, action) => {
         ...state,
         isAdding: false,
         allJobs: addJob(state.allJobs, action.payload),
-        errorsForAdding: {}
+        errorsAdding: {}
       }
     case JobsActionTypes.ADD_JOB_FAILURE:
       return {
         ...state,
         isAdding: false,
-        errorsForAdding: action.payload
+        errorsAdding: action.payload
+      }
+    case JobsActionTypes.FETCH_JOBS_START:
+      return {
+        ...state,
+        isFetching: true
+      }
+    case JobsActionTypes.FETCH_JOBS_SUCCESS:
+      return {
+        ...state,
+        isFetching: false,
+        allJobs: action.payload,
+        errorsFetching: {}
+      }
+    case JobsActionTypes.FETCH_JOBS_FAILURE:
+      return {
+        ...state,
+        isFetching: false,
+        errorsFetching: action.payload
       }
     default:
       return state;

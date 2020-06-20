@@ -1,12 +1,31 @@
-import React from 'react';
-import AddJob from '../../components/add-job/add-job.components';
-import Dashboard from '../../components/dashboard/dashboard.component';
+import React, {useEffect} from 'react';
+import {connect} from 'react-redux';
+import {createStructuredSelector} from 'reselect';
 
-const JobsPage = ()  => (
+import AddJob from '../../components/add-job/add-job.component';
+import Dashboard from '../../components/dashboard/dashboard.component';
+import WithLoading from '../../components/with-loading/with-loading.component';
+
+import { selectAreJobsLoaded } from '../../redux/jobs/jobs.selectors';
+import { fetchJobs } from '../../redux/jobs/jobs.actions';
+
+const DashboardWithLoading = WithLoading(Dashboard);
+
+const JobsPage = ({areJobsLoaded, dispatch})  => {
+  
+  useEffect(() => {
+    dispatch(fetchJobs());
+  }, []);
+
+  return (
   <div className="jobs-page">
     <AddJob />
-    <Dashboard />
+    <DashboardWithLoading isLoading={!areJobsLoaded} />
   </div>
-);
+)};
 
-export default JobsPage;
+const mapStateToProps = createStructuredSelector({
+  areJobsLoaded: selectAreJobsLoaded
+});
+
+export default connect(mapStateToProps)(JobsPage);

@@ -1,16 +1,10 @@
 export const addJob = (jobs, jobToAdd) => {
-  const categoryExists = jobs.find(job => jobToAdd.category in job);
+  const categoryExists = jobToAdd.category in jobs;
 
   if (categoryExists) {
-    return jobs.map(job => {
-      if (jobToAdd.category in job) {
-        job[jobToAdd.category].push(jobToAdd);
-        return {[jobToAdd.category]: job[jobToAdd.category]};
-      } else {
-        return job;
-      }
-    });
+    jobs[jobToAdd.category].push(jobToAdd);
+    return {...jobs};
   } else {
-    return [...jobs, {[jobToAdd.category]: [jobToAdd]}];
+    return {...jobs, [jobToAdd.category]: [jobToAdd]};
   }
 };
