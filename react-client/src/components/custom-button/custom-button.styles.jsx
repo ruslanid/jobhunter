@@ -1,7 +1,23 @@
-import styled from 'styled-components';
+import styled, {css} from 'styled-components';
+
+const addJobWidth = css`
+  width: 13%;
+`;
+
+const normalWidth = css`
+  width: 80%;
+`;
+
+const setWidth = props => {
+  if (props.addJob) {
+    return addJobWidth;
+  } else {
+    return normalWidth;
+  }
+}
 
 export const CustomButtonContainer = styled.button`
-  width: 13%;
+  ${setWidth}
   height: 40px;
   color: white;
   border: 1px solid white;

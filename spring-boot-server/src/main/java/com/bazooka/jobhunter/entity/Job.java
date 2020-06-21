@@ -24,7 +24,7 @@ public class Job {
 	@NotBlank(message="Company can't be blank")
 	private String company;
 	
-	private String category = "interested";
+	private String category = "Interested";
 	
 	@Email
 	private String email;

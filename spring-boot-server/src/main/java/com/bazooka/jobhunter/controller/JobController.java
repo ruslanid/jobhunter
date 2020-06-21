@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bazooka.jobhunter.entity.Job;
-import com.bazooka.jobhunter.exceptions.JobNotFoundException;
 import com.bazooka.jobhunter.service.JobService;
 import com.bazooka.jobhunter.service.EntityValidationService;
 

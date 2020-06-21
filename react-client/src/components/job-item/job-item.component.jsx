@@ -1,4 +1,5 @@
 import React from 'react';
+import {withRouter} from 'react-router-dom';
 
 import {
   JobItemContainer,
@@ -7,12 +8,12 @@ import {
   LocationContainer
 } from './job-item.styles';
 
-const JobItem = ({job}) => (
-  <JobItemContainer>
+const JobItem = ({job, history, match}) => (
+  <JobItemContainer onClick={() => history.push(`${match.url}/${job.id}`)}>
     <CompanyContainer>{job.company}</CompanyContainer>
     <PositionContainer>{job.position}</PositionContainer>
     <LocationContainer>{job.location}</LocationContainer>
   </JobItemContainer>
 );
 
-export default JobItem;
+export default withRouter(JobItem);

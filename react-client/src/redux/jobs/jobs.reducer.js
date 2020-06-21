@@ -6,9 +6,8 @@ import {
 
 const INITIAL_STATE = {
   allJobs: null,
-  isAdding: false,
+  job: null,
   errorsAdding: {},
-  isFetching: false,
   errorsFetching: {}
 };
 
@@ -50,6 +49,18 @@ const jobsReducer = (state = INITIAL_STATE, action) => {
         isFetching: false,
         errorsFetching: action.payload
       }
+      case JobsActionTypes.FETCH_JOB_START:
+        return {
+          ...state,
+          isFetching: true
+        }
+      case JobsActionTypes.FETCH_JOB_SUCCESS:
+        return {
+          ...state,
+          isFetching: false,
+          job: action.payload,
+          errorsFetching: {}
+        }
     default:
       return state;
   }

@@ -76,7 +76,7 @@ const AddJob = ({isAdding, errors, dispatch}) => {
               <MoonLoader size={30} color={"gray"} />
             </LoaderContainer>)
             :
-            (<CustomButton type="submit">Add Job</CustomButton>)
+            (<CustomButton type="submit" addJob>Add Job</CustomButton>)
           }
         </AddFormContainer>
     </AddJobContainer>

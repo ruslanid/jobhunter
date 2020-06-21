@@ -20,4 +20,14 @@ export const selectAllJobs = createSelector(
 export const selectAreJobsLoaded = createSelector(
   [selectJobs],
   jobs => !!jobs.allJobs
+);
+
+export const selectJob = createSelector(
+  [selectJobs],
+  jobs => jobs.job
 )
+
+export const selectIsJobLoaded = createSelector(
+  [selectJobs],
+  jobs => !!jobs.job
+);

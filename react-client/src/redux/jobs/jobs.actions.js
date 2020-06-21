@@ -54,12 +54,12 @@ export const fetchJobs = job => {
     axios.get('/api/jobs')
     .then (res => {
       const jobsByCategory = {
-        "interested": [],
-        "applied": [],
-        "hot": [],
-        "cold": [],
-        "offer": [],
-        "rejected": []
+        "Interested": [],
+        "Applied": [],
+        "Hot": [],
+        "Cold": [],
+        "Offer": [],
+        "Rejected": []
       };
       
       res.data.map(job => {
@@ -70,6 +70,31 @@ export const fetchJobs = job => {
 
       dispatch(fetchJobsSuccess(jobsByCategory));
     })
-    .catch(error => dispatch(fetchJobsFailure(error.response.data)))
+    .catch(error => {
+      dispatch(fetchJobsFailure(error.response.data));
+    })
+  };
+};
+
+//
+// FETCH JOB
+//
+
+const fetchJobStart = () => ({
+  type: JobsActionTypes.FETCH_JOB_START
+});
+
+const fetchJobSuccess = job => ({
+  type: JobsActionTypes.FETCH_JOB_SUCCESS,
+  payload: job
+});
+
+export const fetchJob = (jobId, history) => {
+  return dispatch => {
+    dispatch(fetchJobStart());
+
+    axios.get(`/api/jobs/${jobId}`)
+    .then(res => dispatch(fetchJobSuccess(res.data)))
+    .catch(error => history.push("/jobs"))
   }
 };
