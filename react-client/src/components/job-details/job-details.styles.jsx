@@ -7,13 +7,17 @@ export const JobDetailsContainer = styled.div`
   align-items: center;
 
   @media (max-width: 800px) {
-    width: 80%;
+    width: 100%;
     margin-bottom: 40px;
   }
 `;
 
-export const JobFieldContainer = styled.div`
+export const JobFieldsContainer = styled.div`
   width: 80%;
+`;
+
+export const JobFieldContainer = styled.div`
+  width: 100%;
   background-color: #F9F9F9;
   border-radius: 7px;
   padding: 10px;
@@ -21,6 +25,10 @@ export const JobFieldContainer = styled.div`
   margin-top: 5px;
   border: 1px solid gray;
   font-size: 18px;
+
+  &:last-child {
+    height: 100px;
+  }
 
   @media (max-width: 800px) {
     width: 100%;

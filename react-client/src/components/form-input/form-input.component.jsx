@@ -6,9 +6,9 @@ import {
   ErrorContainer
 } from './form-input.styles';
 
-const FormInput = ({handleChange, error, ...otherProps}) => {
+const FormInput = ({handleChange, error, addJob, ...otherProps}) => {
   return (
-    <FormInputWrapper>
+    <FormInputWrapper addJob={addJob}>
         <FormInputContainer onChange={handleChange} {...otherProps} error={error} />
         <ErrorContainer>{error}</ErrorContainer>
     </FormInputWrapper>

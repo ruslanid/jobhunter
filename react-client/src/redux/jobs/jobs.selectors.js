@@ -2,14 +2,14 @@ import {createSelector} from 'reselect';
 
 const selectJobs = state => state.jobs;
 
-export const selectIsAddingJob = createSelector(
+export const selectIsSavingJob = createSelector(
   [selectJobs],
-  jobs => jobs.isAdding
+  jobs => jobs.isSaving
 );
 
-export const selectErrorsForAdding = createSelector(
+export const selectErrorsSaving = createSelector(
   [selectJobs],
-  jobs => jobs.errorsAdding
+  jobs => jobs.errorsSaving
 );
 
 export const selectAllJobs = createSelector(

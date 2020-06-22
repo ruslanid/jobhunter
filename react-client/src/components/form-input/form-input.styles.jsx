@@ -16,9 +16,26 @@ const setBorder = props => {
   }
 }
 
-export const FormInputWrapper = styled.div`
+const addJobWidth = css`
   width: 28%;
   margin: 0 3px;
+`;
+
+const normalWidth = css`
+  width: 100%;
+  margin: 0 0 15px;
+`;
+
+const setWrapperProps = props => {
+  if (props.addJob) {
+    return addJobWidth;
+  } else {
+    return normalWidth;
+  }
+}
+
+export const FormInputWrapper = styled.div`
+  ${setWrapperProps}
 
   @media (max-width: 800px) {
     width: 100%;

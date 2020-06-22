@@ -1,31 +1,48 @@
 import axios from 'axios';
-
 import JobsActionTypes from './jobs.types';
 
 //
-// ADD JOB
+// SAVE JOB
 //
-const addJobStart = () => ({
-  type: JobsActionTypes.ADD_JOB_START
+const saveJobStart = () => ({
+  type: JobsActionTypes.SAVE_JOB_START
 });
 
-const addJobSuccess = job => ({
-  type: JobsActionTypes.ADD_JOB_SUCCESS,
+const saveJobSuccess = job => ({
+  type: JobsActionTypes.SAVE_JOB_SUCCESS,
   payload: job
 });
 
-const addJobFailure = error => ({
-  type: JobsActionTypes.ADD_JOB_FAILURE,
+const saveJobFailure = error => ({
+  type: JobsActionTypes.SAVE_JOB_FAILURE,
   payload: error
 });
 
 export const addJob = job => {
   return dispatch => {
-    dispatch(addJobStart());
+    dispatch(saveJobStart());
 
     axios.post('/api/jobs', job)
-    .then (res => dispatch(addJobSuccess(res.data)))
-    .catch(error => dispatch(addJobFailure(error.response.data)))
+    .then (res => dispatch(saveJobSuccess(res.data)))
+    .catch(error => dispatch(saveJobFailure(error.response.data)))
+  }
+};
+
+export const saveJob = (job, history) => {
+  return dispatch => {
+    console.log(job);
+    dispatch(saveJobStart());
+
+    axios.put('/api/jobs', job)
+    .then (res => {
+      dispatch(saveJobSuccess(res.data));
+      history.push(`/jobs/${job.id}`);
+    })
+    .catch(error => {
+      console.log("here ------------------>");
+      console.log(error);
+      dispatch(saveJobFailure(error.response.data))
+    })
   }
 };
 
@@ -47,7 +64,7 @@ const fetchJobsFailure = error => ({
   payload: error
 });
 
-export const fetchJobs = job => {
+export const fetchJobs = () => {
   return dispatch => {
     dispatch(fetchJobsStart());
 

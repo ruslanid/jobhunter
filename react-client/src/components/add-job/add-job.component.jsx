@@ -15,11 +15,11 @@ import CustomButton from '../custom-button/custom-button.component';
 
 import {addJob} from '../../redux/jobs/jobs.actions';
 import { 
-  selectIsAddingJob,
-  selectErrorsForAdding
+  selectIsSavingJob,
+  selectErrorsSaving
 } from '../../redux/jobs/jobs.selectors';
 
-const AddJob = ({isAdding, errors, dispatch}) => {
+const AddJob = ({isSaving, errors, dispatch}) => {
 
   const [jobDetails, setJobDetails] = useState({
     company: '',
@@ -29,7 +29,7 @@ const AddJob = ({isAdding, errors, dispatch}) => {
 
   const {company, location, position} = jobDetails;
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = event => {
     event.preventDefault();
     const newJob = {...jobDetails};
     dispatch(addJob(newJob));
@@ -53,6 +53,7 @@ const AddJob = ({isAdding, errors, dispatch}) => {
               value={company}
               handleChange={handleChange}
               error={errors.company}
+              addJob
           />
           <FormInput
               type="text"
@@ -61,6 +62,7 @@ const AddJob = ({isAdding, errors, dispatch}) => {
               value={location}
               handleChange={handleChange}
               error={errors.location}
+              addJob
           />
           <FormInput
               type="text"
@@ -69,9 +71,10 @@ const AddJob = ({isAdding, errors, dispatch}) => {
               value={position}
               handleChange={handleChange}
               error={errors.position}
+              addJob
           />
           {
-            isAdding ?
+            isSaving ?
             (<LoaderContainer>
               <MoonLoader size={30} color={"gray"} />
             </LoaderContainer>)
@@ -84,8 +87,8 @@ const AddJob = ({isAdding, errors, dispatch}) => {
 };
 
 const mapStateToProps = createStructuredSelector({
-  isAdding: selectIsAddingJob,
-  errors: selectErrorsForAdding
+  isSaving: selectIsSavingJob,
+  errors: selectErrorsSaving
 });
 
 export default connect(mapStateToProps)(AddJob);

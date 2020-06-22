@@ -1,35 +1,37 @@
 import JobsActionTypes from './jobs.types';
 
 import {
-  addJob
+  saveJob
 } from './jobs.utils';
 
 const INITIAL_STATE = {
   allJobs: null,
   job: null,
-  errorsAdding: {},
+  isSaving: false,
+  errorsSaving: {},
   errorsFetching: {}
 };
 
 const jobsReducer = (state = INITIAL_STATE, action) => {
   switch(action.type) {
-    case JobsActionTypes.ADD_JOB_START:
+    case JobsActionTypes.SAVE_JOB_START:
       return {
         ...state,
-        isAdding: true
+        isSaving: true
       }
-    case JobsActionTypes.ADD_JOB_SUCCESS:
+    case JobsActionTypes.SAVE_JOB_SUCCESS:
       return {
         ...state,
-        isAdding: false,
-        allJobs: addJob(state.allJobs, action.payload),
-        errorsAdding: {}
+        isSaving: false,
+        allJobs: saveJob(state.allJobs, action.payload),
+        job: action.payload,
+        errorsSaving: {}
       }
-    case JobsActionTypes.ADD_JOB_FAILURE:
+    case JobsActionTypes.SAVE_JOB_FAILURE:
       return {
         ...state,
-        isAdding: false,
-        errorsAdding: action.payload
+        isSaving: false,
+        errorsSaving: action.payload
       }
     case JobsActionTypes.FETCH_JOBS_START:
       return {

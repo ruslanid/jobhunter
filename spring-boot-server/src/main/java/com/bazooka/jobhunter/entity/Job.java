@@ -1,12 +1,18 @@
 package com.bazooka.jobhunter.entity;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 public class Job {
@@ -38,11 +44,13 @@ public class Job {
 	
 	private String link;
 	
-	@Column(name="created_at")
-	private String createdAt;
+	@JsonFormat(pattern = "yyyy-mm-dd")
+	@Column(name="created_at", updatable = false)
+	private Date createdAt;
 	
+	@JsonFormat(pattern = "yyyy-mm-dd")
 	@Column(name="updated_at")
-	private String updatedAt;
+	private Date updatedAt;
 	
 	public Job() {
 		
@@ -128,20 +136,30 @@ public class Job {
 		this.link = link;
 	}
 
-	public String getCreatedAt() {
+	public Date getCreatedAt() {
 		return createdAt;
 	}
 
-	public void setCreatedAt(String createdAt) {
+	public void setCreatedAt(Date createdAt) {
 		this.createdAt = createdAt;
 	}
 
-	public String getUpdatedAt() {
+	public Date getUpdatedAt() {
 		return updatedAt;
 	}
 
-	public void setUpdatedAt(String updatedAt) {
+	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
+	}
+	
+	@PrePersist
+	protected void onCreate() {
+		this.createdAt = new Date();
+	}
+	
+	@PreUpdate
+	protected void onUpdate() {
+		this.updatedAt = new Date();
 	}
 
 	@Override
