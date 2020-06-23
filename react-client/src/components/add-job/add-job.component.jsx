@@ -15,7 +15,7 @@ import CustomButton from '../custom-button/custom-button.component';
 
 import {addJob} from '../../redux/jobs/jobs.actions';
 import { 
-  selectIsSavingJob,
+  selectIsSaving,
   selectErrorsSaving
 } from '../../redux/jobs/jobs.selectors';
 
@@ -87,7 +87,7 @@ const AddJob = ({isSaving, errors, dispatch}) => {
 };
 
 const mapStateToProps = createStructuredSelector({
-  isSaving: selectIsSavingJob,
+  isSaving: selectIsSaving,
   errors: selectErrorsSaving
 });
 

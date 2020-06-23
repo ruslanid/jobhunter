@@ -27,7 +27,7 @@ export const JobFieldContainer = styled.div`
   font-size: 18px;
 
   &:last-child {
-    height: 100px;
+    height: 150px;
   }
 
   @media (max-width: 800px) {

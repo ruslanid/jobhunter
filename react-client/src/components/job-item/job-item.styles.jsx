@@ -10,16 +10,17 @@ export const JobItemContainer = styled.div`
 `;
 
 export const CompanyContainer = styled.p`
-  font-size: 24px;
+  font-size: 20px;
   color: red;
   font-style: italic;
   margin-top: 15px;
 `;
 
 export const PositionContainer = styled.p`
-  font-size: 20px;
+  font-size: 17px;
+  font-weight: bold;
 `;
 
 export const LocationContainer = styled.p`
-  font-size: 17px;
+  font-size: 15px;
 `;

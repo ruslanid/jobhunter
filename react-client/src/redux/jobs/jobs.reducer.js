@@ -1,15 +1,18 @@
 import JobsActionTypes from './jobs.types';
 
 import {
-  saveJob
+  saveJob,
+  deleteJob
 } from './jobs.utils';
 
 const INITIAL_STATE = {
   allJobs: null,
   job: null,
   isSaving: false,
+  isDeleting: false,
   errorsSaving: {},
-  errorsFetching: {}
+  errorsFetching: {},
+  errorsDeleting: {}
 };
 
 const jobsReducer = (state = INITIAL_STATE, action) => {
@@ -51,18 +54,35 @@ const jobsReducer = (state = INITIAL_STATE, action) => {
         isFetching: false,
         errorsFetching: action.payload
       }
-      case JobsActionTypes.FETCH_JOB_START:
-        return {
-          ...state,
-          isFetching: true
-        }
-      case JobsActionTypes.FETCH_JOB_SUCCESS:
-        return {
-          ...state,
-          isFetching: false,
-          job: action.payload,
-          errorsFetching: {}
-        }
+    case JobsActionTypes.FETCH_JOB_START:
+      return {
+        ...state,
+        isFetching: true
+      }
+    case JobsActionTypes.FETCH_JOB_SUCCESS:
+      return {
+        ...state,
+        isFetching: false,
+        job: action.payload,
+        errorsFetching: {}
+      }
+    case JobsActionTypes.DELETE_JOB_START:
+      return {
+        ...state,
+        isDeleting: true
+      }
+    case JobsActionTypes.DELETE_JOB_SUCCESS:
+      return {
+        ...state,
+        isDeleting: false,
+        allJobs: deleteJob(state.allJobs, action.payload)
+      }
+    case JobsActionTypes.DELETE_JOB_FAILURE:
+      return {
+        ...state,
+        isDeleting: false,
+        errorsDeleting: action.payload
+      }
     default:
       return state;
   }

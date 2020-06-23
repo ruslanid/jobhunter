@@ -2,7 +2,7 @@ import axios from 'axios';
 import JobsActionTypes from './jobs.types';
 
 //
-// SAVE JOB
+// SAVE JOB (ADD and UPDATE)
 //
 const saveJobStart = () => ({
   type: JobsActionTypes.SAVE_JOB_START
@@ -28,9 +28,8 @@ export const addJob = job => {
   }
 };
 
-export const saveJob = (job, history) => {
+export const updateJob = (job, history) => {
   return dispatch => {
-    console.log(job);
     dispatch(saveJobStart());
 
     axios.put('/api/jobs', job)
@@ -39,8 +38,6 @@ export const saveJob = (job, history) => {
       history.push(`/jobs/${job.id}`);
     })
     .catch(error => {
-      console.log("here ------------------>");
-      console.log(error);
       dispatch(saveJobFailure(error.response.data))
     })
   }
@@ -49,7 +46,6 @@ export const saveJob = (job, history) => {
 //
 // FETCH JOBS
 //
-
 const fetchJobsStart = () => ({
   type: JobsActionTypes.FETCH_JOBS_START
 });
@@ -69,34 +65,14 @@ export const fetchJobs = () => {
     dispatch(fetchJobsStart());
 
     axios.get('/api/jobs')
-    .then (res => {
-      const jobsByCategory = {
-        "Interested": [],
-        "Applied": [],
-        "Hot": [],
-        "Cold": [],
-        "Offer": [],
-        "Rejected": []
-      };
-      
-      res.data.map(job => {
-        if (job.category) {
-          jobsByCategory[job.category].push(job);
-        }
-      });
-
-      dispatch(fetchJobsSuccess(jobsByCategory));
-    })
-    .catch(error => {
-      dispatch(fetchJobsFailure(error.response.data));
-    })
+    .then (res => dispatch(fetchJobsSuccess(res.data)))
+    .catch(error => dispatch(fetchJobsFailure(error.response.data)))
   };
 };
 
 //
 // FETCH JOB
 //
-
 const fetchJobStart = () => ({
   type: JobsActionTypes.FETCH_JOB_START
 });
@@ -113,5 +89,35 @@ export const fetchJob = (jobId, history) => {
     axios.get(`/api/jobs/${jobId}`)
     .then(res => dispatch(fetchJobSuccess(res.data)))
     .catch(error => history.push("/jobs"))
+  }
+};
+
+//
+// DELETE JOB
+//
+const deleteJobStart = () => ({
+  type: JobsActionTypes.DELETE_JOB_START
+});
+
+const deleteJobSuccess = jobId => ({
+  type: JobsActionTypes.DELETE_JOB_SUCCESS,
+  payload: jobId
+});
+
+const deleteJobFailure = error => ({
+  type: JobsActionTypes.DELETE_JOB_FAILURE,
+  payload: error
+});
+
+export const deleteJob = (jobId, history) => {
+  return dispatch => {
+    dispatch(deleteJobStart());
+
+    axios.delete(`/api/jobs/${jobId}`)
+    .then(res => {
+      dispatch(deleteJobSuccess(jobId));
+      history.push("/jobs");
+    })
+    .catch(error => dispatch(deleteJobFailure(error.response.data)))
   }
 };

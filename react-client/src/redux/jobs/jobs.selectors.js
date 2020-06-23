@@ -2,7 +2,7 @@ import {createSelector} from 'reselect';
 
 const selectJobs = state => state.jobs;
 
-export const selectIsSavingJob = createSelector(
+export const selectIsSaving = createSelector(
   [selectJobs],
   jobs => jobs.isSaving
 );
@@ -14,7 +14,24 @@ export const selectErrorsSaving = createSelector(
 
 export const selectAllJobs = createSelector(
   [selectJobs],
-  jobs => jobs.allJobs
+  jobs => {
+    const jobsByCategory = {
+      "Interested": [],
+      "Applied": [],
+      "Hot": [],
+      "Cold": [],
+      "Offer": [],
+      "Rejected": []
+    };
+
+    jobs.allJobs.forEach(job => {
+      if (job.category) {
+        jobsByCategory[job.category].push(job);
+      }
+    });
+
+    return jobsByCategory;
+  }
 );
 
 export const selectAreJobsLoaded = createSelector(
@@ -30,4 +47,9 @@ export const selectJob = createSelector(
 export const selectIsJobLoaded = createSelector(
   [selectJobs],
   jobs => !!jobs.job
+);
+
+export const selectIsDeleting = createSelector(
+  [selectJobs],
+  jobs => jobs.isDeleting
 );

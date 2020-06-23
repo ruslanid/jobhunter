@@ -7,7 +7,8 @@ import {
   EditFormContainer,
   SelectContainer,
   TextareaContainer,
-  LoaderContainer
+  LoaderContainer,
+  DeleteButtonContainer
 } from './job-edit.styles';
 
 import JobHeader from '../../components/job-header/job-header.component';
@@ -16,13 +17,14 @@ import FormInput from '../../components/form-input/form-input.component';
 
 import {
   selectJob,
-  selectIsSavingJob,
-  selectErrorsSaving
+  selectIsSaving,
+  selectErrorsSaving,
+  selectIsDeleting
 } from '../../redux/jobs/jobs.selectors';
 
-import { saveJob } from '../../redux/jobs/jobs.actions';
+import { updateJob, deleteJob } from '../../redux/jobs/jobs.actions';
 
-const JobEditPage = ({job, isSaving, errors, dispatch, history}) => {
+const JobEditPage = ({job, isSaving, errors, isDeleting, dispatch, history}) => {
 
   const {
     id, category, company, position, location, link, manager, email, phoneNumber, description
@@ -35,7 +37,7 @@ const JobEditPage = ({job, isSaving, errors, dispatch, history}) => {
   const handleSubmit = event => {
     event.preventDefault();
     const editedJob = {...jobDetails};
-    dispatch(saveJob(editedJob, history));
+    dispatch(updateJob(editedJob, history));
   };
 
   const handleChange = event => {
@@ -121,6 +123,7 @@ const JobEditPage = ({job, isSaving, errors, dispatch, history}) => {
           placeholder="Description"
           value={jobDetails.description  || ''}
           onChange={handleChange}
+          maxLength={254}
         />
 
         {
@@ -131,16 +134,26 @@ const JobEditPage = ({job, isSaving, errors, dispatch, history}) => {
           :
           (<CustomButton type="submit">Save Job</CustomButton>)
         }
-        <CustomButton removeButton>Delete Job</CustomButton>
       </EditFormContainer>
+      {
+        isDeleting ?
+        (<LoaderContainer>
+          <MoonLoader size={30} color={"gray"} />
+        </LoaderContainer>)
+        :
+        (<DeleteButtonContainer>
+          <CustomButton onClick={() => dispatch(deleteJob(jobDetails.id, history))} removeButton>Delete Job</CustomButton>
+        </DeleteButtonContainer>)
+      }
     </div>
   )
 };
 
 const mapStateToProps = createStructuredSelector({
   job: selectJob,
-  isSaving: selectIsSavingJob,
-  errors: selectErrorsSaving
+  isSaving: selectIsSaving,
+  errors: selectErrorsSaving,
+  isDeleting: selectIsDeleting
 });
 
 export default connect(mapStateToProps)(JobEditPage);

@@ -1,22 +1,19 @@
-export const saveJob = (jobs, jobToAdd) => {
-  const categoryExists = jobToAdd.category in jobs;
-
-  if (categoryExists) {
-    const jobExists = jobs[jobToAdd.category].find(job => jobToAdd.id === job.id);
+export const saveJob = (jobs, jobToSave) => {
+    const jobExists = jobs.find(job => jobToSave.id === job.id);
 
     if (jobExists) {
-      return jobs[jobToAdd.category].map(job => {
-        if (jobToAdd.id === job.id) {
-          return jobToAdd;
+      return jobs.map(job => {
+        if (job.id === jobToSave.id) {
+          return jobToSave;
         } else {
           return job;
         }
       });
     } else {
-      jobs[jobToAdd.category].push(jobToAdd);
-      return {...jobs};
+      return [...jobs, {...jobToSave}];
     }
-  } else {
-    return {...jobs, [jobToAdd.category]: [jobToAdd]};
-  }
+};
+
+export const deleteJob = (jobs, jobId) => {
+  return jobs.filter(job => job.id !== jobId);
 };
