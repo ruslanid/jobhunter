@@ -52,7 +52,6 @@ public class NoteServiceImpl implements NoteService {
 		}
 		
 		return result.get();
-		
 	}
 
 }

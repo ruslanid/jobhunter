@@ -51,11 +51,9 @@ public class Job {
 	
 	private String link;
 	
-	@JsonFormat(pattern = "yyyy-mm-dd")
 	@Column(name="created_at", updatable = false)
 	private Date createdAt;
 	
-	@JsonFormat(pattern = "yyyy-mm-dd")
 	@Column(name="updated_at")
 	private Date updatedAt;
 	
@@ -168,6 +166,7 @@ public class Job {
 	@PrePersist
 	protected void onCreate() {
 		this.createdAt = new Date();
+		this.updatedAt = new Date();
 	}
 	
 	@PreUpdate

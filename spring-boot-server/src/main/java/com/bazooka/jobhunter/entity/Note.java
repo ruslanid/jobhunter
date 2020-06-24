@@ -91,6 +91,7 @@ public class Note {
 	@PrePersist
 	protected void onCreate() {
 		this.createdAt = new Date();
+		this.updatedAt = new Date();
 	}
 	
 	@PreUpdate

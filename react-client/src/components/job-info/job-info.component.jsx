@@ -15,7 +15,7 @@ const JobInfo = ({job}) => (
     <JobHeader job={job} />
     <JobAndNotesContainer>
       <JobDetails job={job} />
-      <JobNotes />
+      <JobNotes notes={job.notes} />
     </JobAndNotesContainer>
   </div>
 );
