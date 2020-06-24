@@ -1,10 +1,10 @@
 package com.bazooka.jobhunter.exceptions;
 
-public class JobNotFoundException extends RuntimeException {
+public class ResourceNotFoundException extends RuntimeException {
 
 	private static final long serialVersionUID = 1L;
 
-	public JobNotFoundException(String message) {
+	public ResourceNotFoundException(String message) {
 		super(message);
 	}
 

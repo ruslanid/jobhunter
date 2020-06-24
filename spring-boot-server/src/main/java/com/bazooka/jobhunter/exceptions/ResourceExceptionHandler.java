@@ -5,11 +5,11 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
-public class JobExceptionHandler {
+public class ResourceExceptionHandler {
 	
 	@ExceptionHandler
-	public ResponseEntity<JobExceptionResponse> handleException(JobNotFoundException exc) {
-		JobExceptionResponse response = new JobExceptionResponse(exc.getMessage());
+	public ResponseEntity<ResourceExceptionResponse> handleException(ResourceNotFoundException exc) {
+		ResourceExceptionResponse response = new ResourceExceptionResponse(exc.getMessage());
 		return ResponseEntity.badRequest().body(response);
 	}
 

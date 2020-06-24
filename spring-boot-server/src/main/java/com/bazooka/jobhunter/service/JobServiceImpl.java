@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bazooka.jobhunter.entity.Job;
-import com.bazooka.jobhunter.exceptions.JobNotFoundException;
+import com.bazooka.jobhunter.exceptions.ResourceNotFoundException;
 import com.bazooka.jobhunter.repository.JobRepository;
 
 @Service
@@ -42,7 +42,7 @@ public class JobServiceImpl implements JobService {
 		Optional<Job> result = jobRepository.findById(id);
 		
 		if (result.isEmpty()) {
-			throw new JobNotFoundException("Job with id " + id + " does not exist");
+			throw new ResourceNotFoundException("Job with id " + id + " does not exist");
 		}
 		
 		return result.get();

@@ -1,18 +1,25 @@
 package com.bazooka.jobhunter.entity;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class Job {
@@ -51,6 +58,12 @@ public class Job {
 	@JsonFormat(pattern = "yyyy-mm-dd")
 	@Column(name="updated_at")
 	private Date updatedAt;
+	
+	@OneToMany(fetch=FetchType.LAZY,
+			   mappedBy="job",
+			   cascade= CascadeType.ALL)
+	@JsonManagedReference
+	private List<Note> notes = new ArrayList<>();
 	
 	public Job() {
 		
@@ -160,6 +173,14 @@ public class Job {
 	@PreUpdate
 	protected void onUpdate() {
 		this.updatedAt = new Date();
+	}
+
+	public List<Note> getNotes() {
+		return notes;
+	}
+
+	public void setNotes(List<Note> notes) {
+		this.notes = notes;
 	}
 
 	@Override

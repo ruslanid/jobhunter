@@ -1,10 +1,10 @@
 package com.bazooka.jobhunter.exceptions;
 
-public class JobExceptionResponse {
+public class ResourceExceptionResponse {
 	
 	private String message;
 	
-	public JobExceptionResponse(String message) {
+	public ResourceExceptionResponse(String message) {
         this.message = message;
     }
 
