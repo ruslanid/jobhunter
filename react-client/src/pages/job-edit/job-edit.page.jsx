@@ -6,7 +6,6 @@ import MoonLoader from "react-spinners/MoonLoader";
 import {
   EditFormContainer,
   SelectContainer,
-  TextareaContainer,
   LoaderContainer,
   DeleteButtonContainer
 } from './job-edit.styles';
@@ -14,6 +13,7 @@ import {
 import JobHeader from '../../components/job-header/job-header.component';
 import CustomButton from '../../components/custom-button/custom-button.component';
 import FormInput from '../../components/form-input/form-input.component';
+import FormTextarea from '../../components/form-textarea/form-textarea.component';
 
 import {
   selectJob,
@@ -118,7 +118,7 @@ const JobEditPage = ({job, isSaving, errors, isDeleting, dispatch, history}) => 
           handleChange={handleChange}
         />
 
-        <TextareaContainer
+        <FormTextarea
           name="description"
           placeholder="Description"
           value={jobDetails.description  || ''}

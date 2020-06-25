@@ -17,3 +17,8 @@ export const saveJob = (jobs, jobToSave) => {
 export const deleteJob = (jobs, jobId) => {
   return jobs.filter(job => job.id !== jobId);
 };
+
+export const saveNoteToJob = (job, noteToSave) => {
+  job.notes.push(noteToSave);
+  return job;
+};

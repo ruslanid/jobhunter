@@ -23,25 +23,6 @@ export const SelectContainer = styled.select`
   margin-bottom: 15px;
 `;
 
-export const TextareaContainer = styled.textarea`
-  height: auto;
-  min-height: 150px;
-  width: 100%;
-  border: none;
-  border: 1px solid gray;
-  border-radius: 5px;
-  font-size: 16px;
-  padding: 10px;
-  color: black;
-  background-color: white;
-  margin-bottom: 8px;
-  resize: none;
-
-  &:focus {
-    outline: none;
-  }
-`;
-
 export const LoaderContainer = styled.div`
   height: 40px;
   width: 100%;

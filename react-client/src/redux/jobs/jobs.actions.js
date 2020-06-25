@@ -1,5 +1,5 @@
-import axios from 'axios';
 import JobsActionTypes from './jobs.types';
+import axios from 'axios';
 
 //
 // SAVE JOB (ADD and UPDATE)
@@ -23,7 +23,7 @@ export const addJob = job => {
     dispatch(saveJobStart());
 
     axios.post('/api/jobs', job)
-    .then (res => dispatch(saveJobSuccess(res.data)))
+    .then(res => dispatch(saveJobSuccess(res.data)))
     .catch(error => dispatch(saveJobFailure(error.response.data)))
   }
 };
@@ -33,13 +33,11 @@ export const updateJob = (job, history) => {
     dispatch(saveJobStart());
 
     axios.put('/api/jobs', job)
-    .then (res => {
+    .then(res => {
       dispatch(saveJobSuccess(res.data));
       history.push(`/jobs/${job.id}`);
     })
-    .catch(error => {
-      dispatch(saveJobFailure(error.response.data))
-    })
+    .catch(error => dispatch(saveJobFailure(error.response.data)))
   }
 };
 
@@ -65,7 +63,7 @@ export const fetchJobs = () => {
     dispatch(fetchJobsStart());
 
     axios.get('/api/jobs')
-    .then (res => dispatch(fetchJobsSuccess(res.data)))
+    .then(res => dispatch(fetchJobsSuccess(res.data)))
     .catch(error => dispatch(fetchJobsFailure(error.response.data)))
   };
 };

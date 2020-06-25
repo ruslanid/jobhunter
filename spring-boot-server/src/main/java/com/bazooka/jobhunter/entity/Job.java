@@ -7,7 +7,6 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -17,11 +16,12 @@ import javax.persistence.PreUpdate;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, 
+				  property = "id")
 public class Job {
 	
 	@Id
@@ -57,10 +57,8 @@ public class Job {
 	@Column(name="updated_at")
 	private Date updatedAt;
 	
-	@OneToMany(fetch=FetchType.LAZY,
-			   mappedBy="job",
+	@OneToMany(mappedBy="job",
 			   cascade= CascadeType.ALL)
-	@JsonManagedReference
 	private List<Note> notes = new ArrayList<>();
 	
 	public Job() {
@@ -180,14 +178,6 @@ public class Job {
 
 	public void setNotes(List<Note> notes) {
 		this.notes = notes;
-	}
-
-	@Override
-	public String toString() {
-		return "Job [id=" + id + ", position=" + position + ", location=" + location + ", company=" + company
-				+ ", category=" + category + ", email=" + email + ", phoneNumber=" + phoneNumber + ", manager="
-				+ manager + ", description=" + description + ", link=" + link + ", createdAt=" + createdAt
-				+ ", updatedAt=" + updatedAt + "]";
 	}
 
 }

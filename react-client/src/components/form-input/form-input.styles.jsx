@@ -1,16 +1,22 @@
 import styled, {css} from 'styled-components';
 
-const normalBorder = css`
-  border: 1px solid gray;
-`;
-
 const errorBorder = css`
   border: 1px solid red;
+`;
+
+const addNoteBorder = css`
+  border: 1px solid #ccc;
+`;
+
+const normalBorder = css`
+  border: 1px solid gray;
 `;
 
 const setBorder = props => {
   if(!!props.error) {
     return errorBorder;
+  } else if (props.addNote) {
+    return addNoteBorder;
   } else {
     return normalBorder;
   }

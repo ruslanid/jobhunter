@@ -5,7 +5,6 @@ import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,11 +14,12 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.validation.constraints.NotBlank;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, 
+				  property = "id")
 public class Note {
 
 	@Id
@@ -38,10 +38,8 @@ public class Note {
 	@Column(name="updated_at")
 	private Date updatedAt;
 	
-	@ManyToOne(fetch = FetchType.EAGER,
-			   cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
 	@JoinColumn(name="job_id")
-	@JsonBackReference
 	private Job job;
 	
 	public Note() {
@@ -105,11 +103,6 @@ public class Note {
 
 	public void setJob(Job job) {
 		this.job = job;
-	}
-
-	@Override
-	public String toString() {
-		return "Note [id=" + id + ", title=" + title + ", text=" + text + ", job=" + job + "]";
 	}
 
 }

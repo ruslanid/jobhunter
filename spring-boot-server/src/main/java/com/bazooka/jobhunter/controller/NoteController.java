@@ -45,8 +45,8 @@ public class NoteController {
 			return entityValidationService.validateFields(result);
 		} else {
 			note.setId(0);
-			Note updatedNote = noteService.save(note, jobId);
-			return ResponseEntity.ok().body(updatedNote);
+			Note savedNote = noteService.save(note, jobId);
+			return ResponseEntity.ok().body(savedNote);
 		}
 	}
 	
