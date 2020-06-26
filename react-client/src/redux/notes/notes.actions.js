@@ -32,3 +32,38 @@ export const addNote = (note, jobId) => {
     .catch(error => dispatch(saveNoteFailure(error.response.data)))
   }
 };
+
+export const updateNote = (note, jobId, history) => {
+  return dispatch => {
+    dispatch(saveNoteStart());
+
+    axios.put(`/api/jobs/${jobId}/notes`, note)
+    .then(res => {
+      dispatch(saveNoteSuccess(res.data));
+      history.push(`/jobs/${jobId}`);
+    })
+    .catch(error =>dispatch(saveNoteFailure(error.response.data)))
+  }
+};
+
+//
+// FETCH NOTE
+//
+const fetchNoteStart = () => ({
+  type: NotesActionTypes.FETCH_NOTE_START
+});
+
+const fetchNoteSuccess = note => ({
+  type: NotesActionTypes.FETCH_NOTE_SUCCESS,
+  payload: note
+});
+
+export const fetchNote = (jobId, noteId, history) => {
+  return dispatch => {
+    dispatch(fetchNoteStart());
+
+    axios.get(`/api/jobs/${jobId}/notes/${noteId}`)
+    .then(res => dispatch(fetchNoteSuccess(res.data)))
+    .catch(error => history.push(`/jobs/${jobId}`))
+  }
+};

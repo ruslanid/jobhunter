@@ -61,6 +61,7 @@ const AddNote = ({dispatch, match, isSaving, errors}) => {
         handleChange={handleChange}
         maxLength={254}
         error={errors.text}
+        addNote
       />
 
       <ButtonsContainer>
@@ -74,7 +75,6 @@ const AddNote = ({dispatch, match, isSaving, errors}) => {
         }
         <ActionButtonContainer onClick={() => dispatch(toggleAddNoteHidden(true))}>Cancel</ActionButtonContainer>
       </ButtonsContainer>
-
     </AddNoteFormContainer>
   )
 };

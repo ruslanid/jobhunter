@@ -7,6 +7,7 @@ import WithLoading from '../../components/with-loading/with-loading.component';
 
 import JobInfo from '../../components/job-info/job-info.component';
 import JobEdit from '../../pages/job-edit/job-edit.page';
+import NoteEdit from '../../pages/note-edit/note-edit.page';
 
 import { fetchJob } from '../../redux/jobs/jobs.actions';
 import { selectIsJobLoaded } from '../../redux/jobs/jobs.selectors';
@@ -23,6 +24,7 @@ const JobPage = ({dispatch, match, history, isJobLoaded}) => {
   return (
     <div className="job-page">
       <Switch>
+        <Route path={`${match.path}/notes/:noteId/edit`} component={NoteEdit} />
         <Route
           path={`${match.path}/edit`}
           render={(props) => <JobEditWithLoading isLoading={!isJobLoaded} {...props} />}

@@ -1,4 +1,5 @@
 import React from 'react';
+import {withRouter} from 'react-router-dom';
 import Moment from 'moment';
 
 import {
@@ -8,14 +9,14 @@ import {
   UpdatedDateContainer
 } from './note-item.styles';
 
-const NoteItem = ({title, text, updatedAt}) => (
-  <NoteItemContainer>
-    <TitleContainer>{title}</TitleContainer>
-    <TextContainer>{text}</TextContainer>
+const NoteItem = ({note, history, match}) => (
+  <NoteItemContainer onClick={() => history.push(`${match.url}/notes/${note.id}/edit`)}>
+    <TitleContainer>{note.title}</TitleContainer>
+    <TextContainer>{note.text}</TextContainer>
     <UpdatedDateContainer>
-      {Moment(updatedAt).format('Do MMM h:mm')}
+      {Moment(note.updatedAt).format('Do MMM h:mm A')}
     </UpdatedDateContainer>
   </NoteItemContainer>
 );
 
-export default NoteItem;
+export default withRouter(NoteItem);

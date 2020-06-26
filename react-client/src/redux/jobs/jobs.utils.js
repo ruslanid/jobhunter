@@ -4,6 +4,7 @@ export const saveJob = (jobs, jobToSave) => {
     if (jobExists) {
       return jobs.map(job => {
         if (job.id === jobToSave.id) {
+          jobToSave.notes = job.notes;
           return jobToSave;
         } else {
           return job;
@@ -19,6 +20,20 @@ export const deleteJob = (jobs, jobId) => {
 };
 
 export const saveNoteToJob = (job, noteToSave) => {
-  job.notes.push(noteToSave);
-  return job;
+  const noteExists = job.notes.find(note => note.id === noteToSave.id);
+
+  if (noteExists) {
+    const notes = job.notes.map(note => {
+      if (note.id === noteToSave.id) {
+        return noteToSave;
+      } else {
+        return note;
+      }
+    });
+    return {...job, notes: notes}
+  } else {
+    job.notes.push(noteToSave);
+    return job;
+  }
+
 };

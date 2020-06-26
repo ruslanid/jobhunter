@@ -8,7 +8,7 @@ const addNoteBorder = css`
   border: 1px solid #ccc;
 `;
 
-const normalBorder = css`
+const regularBorder = css`
   border: 1px solid gray;
 `;
 
@@ -18,7 +18,7 @@ const setBorder = props => {
   } else if (props.addNote) {
     return addNoteBorder;
   } else {
-    return normalBorder;
+    return regularBorder;
   }
 }
 

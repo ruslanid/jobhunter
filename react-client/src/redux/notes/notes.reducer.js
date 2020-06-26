@@ -3,7 +3,8 @@ import NotesActionTypes from './notes.types';
 const INITIAL_STATE =  {
   addNoteHidden: true,
   isSaving: false,
-  errorsSaving: {}
+  errorsSaving: {},
+  note: null
 };
 
 const notesReducer = (state = INITIAL_STATE, action) => {
@@ -30,6 +31,16 @@ const notesReducer = (state = INITIAL_STATE, action) => {
         ...state,
         isSaving: false,
         errorsSaving: action.payload
+      }
+    case NotesActionTypes.FETCH_NOTE_START:
+      return {
+        ...state,
+        note: null
+      }
+    case NotesActionTypes.FETCH_NOTE_SUCCESS:
+      return {
+        ...state,
+        note: action.payload
       }
     default:
       return state;

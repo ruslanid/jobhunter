@@ -20,8 +20,8 @@ const JobNotes = ({notes, addNoteHidden, dispatch}) => (
       <CustomButton>Add Note</CustomButton>
     </AddNoteButtonContainer>
     {addNoteHidden ? null : <AddNote />}
-    {notes.map(({id, ...otherProps}) => (
-      <NoteItem key={id} {...otherProps} />
+    {notes.map(note => (
+      <NoteItem key={note.id} note={note} />
     ))}
   </JobNotesContainer>
 );

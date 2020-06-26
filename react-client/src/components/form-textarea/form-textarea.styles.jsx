@@ -4,15 +4,21 @@ const errorBorder = css`
   border: 1px solid red;
 `;
 
-const normalBorder = css`
+const addNoteBorder = css`
   border: 1px solid #ccc;
+`;
+
+const regularBorder = css`
+  border: 1px solid gray;
 `;
 
 const setBorder = props => {
   if(!!props.error) {
     return errorBorder;
+  } else if (props.addNote) {
+    return addNoteBorder;
   } else {
-    return normalBorder;
+    return regularBorder;
   }
 }
 

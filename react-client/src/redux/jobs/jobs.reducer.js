@@ -41,31 +41,27 @@ const jobsReducer = (state = INITIAL_STATE, action) => {
     case JobsActionTypes.FETCH_JOBS_START:
       return {
         ...state,
-        isFetching: true
+        allJobs: null
       }
     case JobsActionTypes.FETCH_JOBS_SUCCESS:
       return {
         ...state,
-        isFetching: false,
         allJobs: action.payload,
         errorsFetching: {}
       }
     case JobsActionTypes.FETCH_JOBS_FAILURE:
       return {
         ...state,
-        isFetching: false,
         errorsFetching: action.payload
       }
     case JobsActionTypes.FETCH_JOB_START:
       return {
         ...state,
-        isFetching: true,
         job: null
       }
     case JobsActionTypes.FETCH_JOB_SUCCESS:
       return {
         ...state,
-        isFetching: false,
         job: action.payload,
         errorsFetching: {}
       }
