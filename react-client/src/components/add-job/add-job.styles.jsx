@@ -17,6 +17,8 @@ export const TitleContainer = styled.h2`
   text-align: center;
   margin-bottom: 40px;
   font-size: 30px;
+  color: #808080;
+  font-weight: lighter;
 
   @media (max-width: 800px) {
     font-size: 25px;
