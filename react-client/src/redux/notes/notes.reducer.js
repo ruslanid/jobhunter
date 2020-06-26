@@ -2,9 +2,11 @@ import NotesActionTypes from './notes.types';
 
 const INITIAL_STATE =  {
   addNoteHidden: true,
+  note: null,
   isSaving: false,
+  isDeleting: false,
   errorsSaving: {},
-  note: null
+  errorsDeleting: {}
 };
 
 const notesReducer = (state = INITIAL_STATE, action) => {
@@ -35,12 +37,31 @@ const notesReducer = (state = INITIAL_STATE, action) => {
     case NotesActionTypes.FETCH_NOTE_START:
       return {
         ...state,
-        note: null
+        note: null,
+        errorsSaving: {},
+        errorsDeleting: {}
       }
     case NotesActionTypes.FETCH_NOTE_SUCCESS:
       return {
         ...state,
         note: action.payload
+      }
+    case NotesActionTypes.DELETE_NOTE_START:
+      return {
+        ...state,
+        isDeleting: true
+      }
+    case NotesActionTypes.DELETE_NOTE_SUCCESS:
+      return {
+        ...state,
+        isDeleting: false,
+        note: null
+      }
+    case NotesActionTypes.DELETE_NOTE_FAILURE:
+      return {
+        ...state,
+        isDeleting: false,
+        errorsDeleting: action.payload
       }
     default:
       return state;

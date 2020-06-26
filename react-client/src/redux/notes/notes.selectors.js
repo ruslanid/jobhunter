@@ -26,3 +26,8 @@ export const selectIsNoteLoaded = createSelector(
   [selectNotes],
   notes => !!notes.note
 );
+
+export const selectIsDeleting = createSelector(
+  [selectNotes],
+  notes => notes.isDeleting
+)

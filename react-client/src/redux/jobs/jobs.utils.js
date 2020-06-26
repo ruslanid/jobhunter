@@ -37,3 +37,8 @@ export const saveNoteToJob = (job, noteToSave) => {
   }
 
 };
+
+export const deleteNoteFromJob = (job, noteId) => {
+  const newNotesArray = job.notes.filter(note => note.id !== noteId);
+  return {...job, notes: newNotesArray};
+}

@@ -4,7 +4,8 @@ import NotesActionTypes from '../notes/notes.types';
 import {
   saveJob,
   deleteJob,
-  saveNoteToJob
+  saveNoteToJob,
+  deleteNoteFromJob
 } from './jobs.utils';
 
 const INITIAL_STATE = {
@@ -57,7 +58,9 @@ const jobsReducer = (state = INITIAL_STATE, action) => {
     case JobsActionTypes.FETCH_JOB_START:
       return {
         ...state,
-        job: null
+        job: null,
+        errorsSaving: {},
+        errorsDeleting: {}
       }
     case JobsActionTypes.FETCH_JOB_SUCCESS:
       return {
@@ -86,6 +89,11 @@ const jobsReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         job: saveNoteToJob(state.job, action.payload)
+      }
+    case NotesActionTypes.DELETE_NOTE_SUCCESS:
+      return {
+        ...state,
+        job: deleteNoteFromJob(state.job, action.payload)
       }
     default:
       return state;

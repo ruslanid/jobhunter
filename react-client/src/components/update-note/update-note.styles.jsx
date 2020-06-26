@@ -31,3 +31,16 @@ export const LoaderContainer = styled.div`
   justify-content: center;
   align-items: center;
 `;
+
+export const DeleteButtonContainer = styled.div`
+  width: 30%;
+  margin: 0px auto 60px;
+
+  @media (max-width: 1200px) {
+    width: 40%;
+  }
+
+  @media (max-width: 800px) {
+    width: 80%;
+  }
+`;

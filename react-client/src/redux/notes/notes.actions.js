@@ -67,3 +67,33 @@ export const fetchNote = (jobId, noteId, history) => {
     .catch(error => history.push(`/jobs/${jobId}`))
   }
 };
+
+//
+// DELETE NOTE
+//
+const deleteNoteStart = () => ({
+  type: NotesActionTypes.DELETE_NOTE_START
+});
+
+const deleteNoteSuccess = noteId => ({
+  type: NotesActionTypes.DELETE_NOTE_SUCCESS,
+  payload: noteId
+});
+
+const deleteNoteFailure = error => ({
+  type: NotesActionTypes.DELETE_NOTE_FAILURE,
+  payload: error
+});
+
+export const deleteNote = (jobId, noteId, history) => {
+  return dispatch => {
+    dispatch(deleteNoteStart());
+
+    axios.delete(`/api/jobs/${jobId}/notes/${noteId}`)
+    .then(res => {
+      dispatch(deleteNoteSuccess(noteId));
+      history.push(`/jobs/${jobId}`);
+    })
+    .catch(error => dispatch(deleteNoteFailure(error.resonse.data)))
+  }
+};

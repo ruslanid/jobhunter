@@ -9,7 +9,8 @@ import {
   UpdateNoteFormContainer,
   CreatedDateContainer,
   CreatedLabelContainer,
-  LoaderContainer
+  LoaderContainer,
+  DeleteButtonContainer
 } from './update-note.styles';
 
 import JobHeader from '../job-header/job-header.component';
@@ -20,11 +21,15 @@ import CustomButton from '../custom-button/custom-button.component';
 import {
   selectNote,
   selectErrorsSaving,
-  selectIsSaving
+  selectIsSaving,
+  selectIsDeleting
 } from '../../redux/notes/notes.selectors';
-import {updateNote} from '../../redux/notes/notes.actions';
+import {
+  updateNote,
+  deleteNote
+} from '../../redux/notes/notes.actions';
 
-const UpdateNote = ({note, dispatch, history, errors, isSaving}) => {
+const UpdateNote = ({note, dispatch, history, errors, isSaving, isDeleting}) => {
 
   const { id, title, text } = note;
 
@@ -53,6 +58,7 @@ const UpdateNote = ({note, dispatch, history, errors, isSaving}) => {
           </CreatedLabelContainer> 
           {Moment(note.createdAt).format('Do MMM h:mm A')}
         </CreatedDateContainer>
+
         <FormInput
           type="text"
           name="title"
@@ -80,6 +86,16 @@ const UpdateNote = ({note, dispatch, history, errors, isSaving}) => {
           (<CustomButton type="submit">Save Note</CustomButton>)
         }
       </UpdateNoteFormContainer>
+      {
+        isDeleting ?
+        (<LoaderContainer>
+          <MoonLoader size={30} color={"gray"} />
+        </LoaderContainer>)
+        :
+        (<DeleteButtonContainer>
+          <CustomButton onClick={() => dispatch(deleteNote(note.job.id, note.id, history))} removeButton>Delete Job</CustomButton>
+        </DeleteButtonContainer>)
+      }
     </div>
   )
 };
@@ -87,7 +103,8 @@ const UpdateNote = ({note, dispatch, history, errors, isSaving}) => {
 const mapStateToProps = createStructuredSelector({
   note: selectNote,
   errors: selectErrorsSaving,
-  isSaving: selectIsSaving
+  isSaving: selectIsSaving,
+  isDeleting: selectIsDeleting
 });
 
 export default withRouter(connect(mapStateToProps)(UpdateNote));
