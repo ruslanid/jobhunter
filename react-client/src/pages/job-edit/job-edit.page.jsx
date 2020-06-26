@@ -10,6 +10,7 @@ import {
   DeleteButtonContainer
 } from './job-edit.styles';
 
+import BackToLink from '../../components/back-to-link/back-to-link.component';
 import JobHeader from '../../components/job-header/job-header.component';
 import CustomButton from '../../components/custom-button/custom-button.component';
 import FormInput from '../../components/form-input/form-input.component';
@@ -51,6 +52,7 @@ const JobEditPage = ({job, isSaving, errors, isDeleting, dispatch, history}) => 
   
   return (
     <div className="job-edit-page">
+      <BackToLink to={`/jobs/${job.id}`} destination="Job" />
       <JobHeader job={job} />
       <EditFormContainer onSubmit={handleSubmit}>
         <SelectContainer name="category" value={jobDetails.category} onChange={handleChange}>

@@ -13,6 +13,7 @@ import {
   DeleteButtonContainer
 } from './update-note.styles';
 
+import BackToLink from '../../components/back-to-link/back-to-link.component';
 import JobHeader from '../job-header/job-header.component';
 import FormInput from '../form-input/form-input.component';
 import FormTextarea from '../form-textarea/form-textarea.component';
@@ -50,6 +51,7 @@ const UpdateNote = ({note, dispatch, history, errors, isSaving, isDeleting}) => 
 
   return (
     <div className="update-note">
+      <BackToLink to={`/jobs/${note.job.id}`} destination="Job" />
       <JobHeader job={note.job} />
       <UpdateNoteFormContainer onSubmit={handleSubmit}>
         <CreatedDateContainer>
