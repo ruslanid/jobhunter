@@ -13,7 +13,6 @@ const WelcomeHeader = () => (
   <WelcomHeaderContainer>
     <BackgroundImageContainer style={{ backgroundImage: `url(${WelcomeImage})`}} />
     <ImageOverlayContainer />
-    
     <TitleContainer>
       The simple and visual way to organize the job hunting process.
     </TitleContainer>

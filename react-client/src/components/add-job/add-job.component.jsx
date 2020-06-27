@@ -45,43 +45,43 @@ const AddJob = ({isSaving, errors, dispatch}) => {
       <TitleContainer>
         Happy Job Hunting, #name.
       </TitleContainer>
-        <AddFormContainer onSubmit={handleSubmit}>
-          <FormInput
-              type="text"
-              name="company"
-              placeholder="Company"
-              value={company}
-              handleChange={handleChange}
-              error={errors.company}
-              addJob
-          />
-          <FormInput
-              type="text"
-              name="location"
-              placeholder="Location"
-              value={location}
-              handleChange={handleChange}
-              error={errors.location}
-              addJob
-          />
-          <FormInput
-              type="text"
-              name="position"
-              placeholder="Position"
-              value={position}
-              handleChange={handleChange}
-              error={errors.position}
-              addJob
-          />
-          {
-            isSaving ?
-            (<LoaderContainer>
-              <MoonLoader size={30} color={"gray"} />
-            </LoaderContainer>)
-            :
-            (<CustomButton type="submit" addJob>Add Job</CustomButton>)
-          }
-        </AddFormContainer>
+      <AddFormContainer onSubmit={handleSubmit}>
+        <FormInput
+            type="text"
+            name="company"
+            placeholder="Company"
+            value={company}
+            handleChange={handleChange}
+            error={errors.company}
+            addJob
+        />
+        <FormInput
+            type="text"
+            name="location"
+            placeholder="Location"
+            value={location}
+            handleChange={handleChange}
+            error={errors.location}
+            addJob
+        />
+        <FormInput
+            type="text"
+            name="position"
+            placeholder="Position"
+            value={position}
+            handleChange={handleChange}
+            error={errors.position}
+            addJob
+        />
+        {
+          isSaving ?
+          (<LoaderContainer>
+            <MoonLoader size={30} color={"gray"} />
+          </LoaderContainer>)
+          :
+          (<CustomButton type="submit" addJob>Add Job</CustomButton>)
+        }
+      </AddFormContainer>
     </AddJobContainer>
   )
 };

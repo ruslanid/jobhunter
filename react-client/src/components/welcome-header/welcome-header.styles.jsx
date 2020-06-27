@@ -6,6 +6,7 @@ export const WelcomHeaderContainer = styled.div`
   display: flex;
 	align-items: center;
   justify-content: center;
+  margin-bottom: 40px;
 `;
 
 export const BackgroundImageContainer = styled.img`

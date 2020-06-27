@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import {Link} from 'react-router-dom';
 
-export const SignInPageContainer = styled.div`
+export const SignUpPageContainer = styled.div`
   margin-bottom: 120px;
 `;
 
@@ -13,7 +13,7 @@ export const HomeLogoContainer = styled.img`
   z-index: 1;
 `;
 
-export const SignInFormContainer = styled.form`
+export const SignUpFormContainer = styled.form`
   width: 20%;
   margin: 0 auto;
 
@@ -22,7 +22,7 @@ export const SignInFormContainer = styled.form`
   }
 `;
 
-export const SignUpLinkContainer = styled(Link)`
+export const SignInLinkContainer = styled(Link)`
   color: gray;
   font-size: 14px;
 `;
