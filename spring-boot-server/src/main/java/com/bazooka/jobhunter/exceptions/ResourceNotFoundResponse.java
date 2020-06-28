@@ -1,10 +1,10 @@
 package com.bazooka.jobhunter.exceptions;
 
-public class ResourceExceptionResponse {
+public class ResourceNotFoundResponse {
 	
 	private String message;
 	
-	public ResourceExceptionResponse(String message) {
+	public ResourceNotFoundResponse(String message) {
         this.message = message;
     }
 

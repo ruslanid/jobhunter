@@ -1,9 +1,15 @@
 import React, {useState} from 'react';
+import {withRouter} from 'react-router-dom';
+import {connect} from 'react-redux';
+import {createStructuredSelector} from 'reselect';
+import MoonLoader from "react-spinners/MoonLoader";
 
 import {
   SignUpPageContainer,
   HomeLogoContainer,
   SignUpFormContainer,
+  ErrorMessageContainer,
+  LoaderContainer,
   SignInLinkContainer
 } from './sign-up.styles';
 
@@ -13,23 +19,30 @@ import WelcomeHeader from '../../components/welcome-header/welcome-header.compon
 import FormInput from '../../components/form-input/form-input.component';
 import CustomButton from '../../components/custom-button/custom-button.component';
 
-const SignUpPage = () => {
+import {signupUser} from '../../redux/users/users.actions';
+import {
+  selectIsSaving,
+  selectErrorsSaving
+} from '../../redux/users/users.selectors';
+
+const SignUpPage = ({dispatch, history, isSaving, errors}) => {
 
   const [userDetails, setUserDetails] = useState({
     firstName: '',
     lastName: '',
-    email: '',
+    username: '',
     password: '',
     confirmPassword: ''
   });
 
   const {
-    firstName, lastName, email, password, confirmPassword
+    firstName, lastName, username, password, confirmPassword
   } = userDetails;
 
   const handleSubmit = event => {
     event.preventDefault();
-    const user = {...userDetails};
+    const newUser = {...userDetails};
+    dispatch(signupUser(newUser, history));
   };
 
   const handleChange = event => {
@@ -48,6 +61,7 @@ const SignUpPage = () => {
           placeholder="First Name"
           value={firstName}
           handleChange={handleChange}
+          error={errors.firstName}
         />
         <FormInput
           type="text"
@@ -55,13 +69,15 @@ const SignUpPage = () => {
           placeholder="Last Name"
           value={lastName}
           handleChange={handleChange}
+          error={errors.lastName}
         />
         <FormInput
           type="text"
-          name="email"
+          name="username"
           placeholder="Email"
-          value={email}
+          value={username}
           handleChange={handleChange}
+          error={errors.username}
         />
         <FormInput
           type="password"
@@ -69,6 +85,7 @@ const SignUpPage = () => {
           placeholder="Password"
           value={password}
           handleChange={handleChange}
+          error={errors.password}
         />
         <FormInput
           type="password"
@@ -76,12 +93,30 @@ const SignUpPage = () => {
           placeholder="Confirm Password"
           value={confirmPassword}
           handleChange={handleChange}
+          error={errors.confirmPassword}
         />
-        <CustomButton type="submit">Sign up</CustomButton>
+
+        <ErrorMessageContainer>
+          {errors.message}
+        </ErrorMessageContainer>
+
+        {
+          isSaving ?
+          (<LoaderContainer>
+            <MoonLoader size={30} color={"gray"} />
+          </LoaderContainer>)
+          :
+          (<CustomButton type="submit">Sign up</CustomButton>)
+        }
         <SignInLinkContainer to="/sign-in">Sign in</SignInLinkContainer>
       </SignUpFormContainer>
     </SignUpPageContainer>
   )
 };
 
-export default SignUpPage;
+const mapStateToProps = createStructuredSelector({
+  isSaving: selectIsSaving,
+  errors: selectErrorsSaving
+});
+
+export default connect(mapStateToProps)(withRouter(SignUpPage));

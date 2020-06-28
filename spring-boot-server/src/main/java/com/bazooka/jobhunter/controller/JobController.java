@@ -49,8 +49,8 @@ public class JobController {
 			return entityValidationService.validateFields(result);
 		} else {
 			job.setId(0);
-			Job savedJob = jobService.save(job);
-			return ResponseEntity.ok().body(savedJob);
+			Job newJob = jobService.save(job);
+			return ResponseEntity.ok().body(newJob);
 		}
 	}
 

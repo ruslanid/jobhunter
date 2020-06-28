@@ -22,7 +22,20 @@ export const SignUpFormContainer = styled.form`
   }
 `;
 
+export const ErrorMessageContainer = styled.div`
+  color: red;
+  margin-bottom: 15px;
+`;
+
 export const SignInLinkContainer = styled(Link)`
   color: gray;
-  font-size: 14px;
+  font-size: 16px;
+`;
+
+export const LoaderContainer = styled.div`
+  height: 40px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;

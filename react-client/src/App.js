@@ -20,7 +20,7 @@ function App() {
 
   return (
     <div className="App">
-      { userDetails.currentUser ? (<Header />) : null}
+      { currentUser ? (<Header />) : null}
       <Switch>
         <Route path="/profile" component={ProfilePage} />
         <Route path="/jobs" component={JobsPage} />
