@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {Switch, Route} from 'react-router-dom';
+import {Switch, Route, withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {createStructuredSelector} from 'reselect';
 
@@ -36,4 +36,4 @@ const mapStateToProps = createStructuredSelector({
   areJobsLoaded: selectAreJobsLoaded
 });
 
-export default connect(mapStateToProps)(JobsPage);
+export default connect(mapStateToProps)(withRouter(JobsPage));

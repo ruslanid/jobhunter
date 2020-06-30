@@ -22,7 +22,21 @@ export const SignInFormContainer = styled.form`
   }
 `;
 
+export const ErrorMessageContainer = styled.div`
+  color: red;
+  margin-bottom: 15px;
+`;
+
+export const LoaderContainer = styled.div`
+  height: 40px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 export const SignUpLinkContainer = styled(Link)`
   color: gray;
   font-size: 14px;
 `;
+

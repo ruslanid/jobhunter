@@ -17,7 +17,7 @@ public class JwtAutEntryPoint implements AuthenticationEntryPoint {
 	public void commence(HttpServletRequest request, HttpServletResponse response,
 			AuthenticationException authException) throws IOException, ServletException {
 
-		response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid credentials");
+		response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid username or password");
 		
 	}
 

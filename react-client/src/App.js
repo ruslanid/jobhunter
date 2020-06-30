@@ -1,5 +1,7 @@
-import React, {useState} from 'react';
+import React, {useEffect} from 'react';
 import {Switch, Route, Redirect} from 'react-router-dom';
+import {connect} from 'react-redux';
+import {createStructuredSelector} from 'reselect';
 
 import './App.css';
 
@@ -10,29 +12,41 @@ import ProfilePage from './pages/profile/profile.page';
 import SignInPage from './pages/sign-in/sign-in.page';
 import SignUpPage from './pages/sign-up/sign-up.page';
 
-function App() {
-  
-  const [userDetails, setUserDetails] = useState({
-    currentUser: null
-  });
+import {selectCurrentUser} from './redux/users/users.selectors';
+import {setCurrentUserFromLocalStorage} from './redux/users/users.actions';
 
-  const {currentUser} = userDetails;
+function App({dispatch, currentUser}) {
+
+  useEffect(() => {
+    dispatch(setCurrentUserFromLocalStorage());
+  }, []);
 
   return (
     <div className="App">
       { currentUser ? (<Header />) : null}
       <Switch>
-        <Route path="/profile" component={ProfilePage} />
-        <Route path="/jobs" component={JobsPage} />
         <Route
+          exact
+          path="/profile"
+          render={() => currentUser ? (<ProfilePage />) : (<Redirect to="/sign-in" />)}
+        />
+        <Route
+          exact
+          path="/jobs"
+          render={() => currentUser ? (<JobsPage />) : (<Redirect to="/sign-in" />)}
+        />
+        <Route
+          exact
           path="/sign-in"
           render={() => currentUser ? (<Redirect to="/jobs" />) : (<SignInPage />)}
         />
         <Route
+          exact
           path="/sign-up"
           render={() => currentUser ? (<Redirect to="/jobs" />) : (<SignUpPage />)}
         />
         <Route
+          exact
           path="/"
           render={() => currentUser ? (<Redirect to="/jobs" />) : (<Redirect to="/sign-in" />)}
         />
@@ -41,4 +55,8 @@ function App() {
   );
 }
 
-export default App;
+const mapStateToProps = createStructuredSelector({
+  currentUser: selectCurrentUser
+});
+
+export default connect(mapStateToProps)(App);

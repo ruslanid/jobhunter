@@ -2,7 +2,10 @@ import UsersActionTypes from './users.types';
 
 const INITIAL_STATE = {
   isSaving: false,
-  errorsSaving: {}
+  errorsSaving: {},
+  currentUser: null,
+  isSigningIn: false,
+  errorsSigningIn: {}
 };
 
 const usersReducer = (state = INITIAL_STATE, action) => {
@@ -23,6 +26,29 @@ const usersReducer = (state = INITIAL_STATE, action) => {
         ...state,
         isSaving: false,
         errorsSaving: action.payload
+      }
+    case UsersActionTypes.SET_CURRENT_USER_START:
+      return {
+        ...state,
+        isSigningIn: true,
+        errorsSigningIn: {}
+      }
+    case UsersActionTypes.SET_CURRENT_USER_SUCCESS:
+      return {
+        ...state,
+        isSigningIn: false,
+        currentUser: action.payload
+      }
+    case UsersActionTypes.SET_CURRENT_USER_FAILURE:
+      return {
+        ...state,
+        isSigningIn: false,
+        errorsSigningIn: action.payload
+      }
+    case UsersActionTypes.REMOVE_CURRENT_USER:
+      return {
+        ...state,
+        currentUser: null
       }
     default:
       return state;

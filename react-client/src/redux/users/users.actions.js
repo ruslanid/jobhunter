@@ -1,6 +1,6 @@
 import UsersActionTypes from './users.types';
 import axios from 'axios';
-import { ThemeConsumer } from 'styled-components';
+import jwt_decode from 'jwt-decode';
 
 //
 // SAVE USER (SIGN UP AND UPDATE)
@@ -28,5 +28,59 @@ export const signupUser = (user, history) => {
       history.push("/sign-in");
     })
     .catch(error => dispatch(saveUserFailure(error.response.data)))
+  }
+};
+
+//
+// SET CURRENT USER AFTER SIGN IN OR LOCAL STORAGE
+//
+const setCurrentUserStart = () => ({
+  type: UsersActionTypes.SET_CURRENT_USER_START
+});
+
+const setCurrentUserSuccess = user => ({
+  type: UsersActionTypes.SET_CURRENT_USER_SUCCESS,
+  payload: user
+});
+
+const setCurrentUserFailure = error => ({
+  type: UsersActionTypes.SET_CURRENT_USER_FAILURE,
+  payload: error
+});
+
+export const signinUser = (user, history) => {
+  return dispatch => {
+    dispatch(setCurrentUserStart());
+
+    axios.post('/api/users/login', user)
+    .then(res => {
+      const {token} = res.data;
+      const decoded_jwt = jwt_decode(token);
+      dispatch(setCurrentUserSuccess(decoded_jwt));
+      localStorage.setItem("token", token);
+      history.push("/");
+    })
+    .catch(error => {
+      console.log(error);
+      dispatch(setCurrentUserFailure(error.response.data))})
+  }
+};
+
+const removeCurrentUser = () => ({
+  type: UsersActionTypes.REMOVE_CURRENT_USER
+});
+
+export const setCurrentUserFromLocalStorage = () => {
+  return dispatch => {
+    const jwt = localStorage.token;
+    if (jwt) {
+      const decoded_jwt = jwt_decode(jwt);
+      if (decoded_jwt.exp < (Date.now() / 1000)) {
+        localStorage.removeItem("token");
+        dispatch(removeCurrentUser());
+      } else {
+        dispatch(setCurrentUserSuccess(decoded_jwt));
+      }
+    }
   }
 };
