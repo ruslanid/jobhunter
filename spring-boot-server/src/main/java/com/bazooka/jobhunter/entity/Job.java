@@ -7,9 +7,12 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
@@ -17,6 +20,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
@@ -58,8 +62,13 @@ public class Job {
 	private Date updatedAt;
 	
 	@OneToMany(mappedBy="job",
-			   cascade= CascadeType.ALL)
+			   cascade= CascadeType.ALL,
+			   orphanRemoval = true)
 	private List<Note> notes = new ArrayList<>();
+	
+	@ManyToOne
+	@JsonIgnore
+	private User user;
 	
 	public Job() {
 		
@@ -161,6 +170,14 @@ public class Job {
 		this.updatedAt = updatedAt;
 	}
 	
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
 	@PrePersist
 	protected void onCreate() {
 		this.createdAt = new Date();

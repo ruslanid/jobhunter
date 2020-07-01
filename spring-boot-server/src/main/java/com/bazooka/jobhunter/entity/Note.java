@@ -38,8 +38,7 @@ public class Note {
 	@Column(name="updated_at")
 	private Date updatedAt;
 	
-	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
-	@JoinColumn(name="job_id")
+	@ManyToOne
 	private Job job;
 	
 	public Note() {

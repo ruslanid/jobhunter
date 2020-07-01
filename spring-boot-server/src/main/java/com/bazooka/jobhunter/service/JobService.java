@@ -1,17 +1,15 @@
 package com.bazooka.jobhunter.service;
 
-import java.util.List;
-
 import com.bazooka.jobhunter.entity.Job;
 
 public interface JobService {
 	
-	public List<Job> findAll();
+	public Iterable<Job> findAll(String username);
 	
-	public Job findById(long id);
+	public Job findById(long id, String username);
 	
-	public Job save(Job job);
+	public Job save(Job job, String username);
 	
-	public void deleteById(long id);
+	public void deleteById(long id, String username);
 
 }

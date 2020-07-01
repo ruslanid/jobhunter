@@ -18,8 +18,9 @@ import {
   selectIsSaving,
   selectErrorsSaving
 } from '../../redux/jobs/jobs.selectors';
+import { selectCurrentUser } from '../../redux/users/users.selectors';
 
-const AddJob = ({isSaving, errors, dispatch}) => {
+const AddJob = ({currentUser, isSaving, errors, dispatch}) => {
 
   const [jobDetails, setJobDetails] = useState({
     company: '',
@@ -43,7 +44,7 @@ const AddJob = ({isSaving, errors, dispatch}) => {
   return (
     <AddJobContainer>
       <TitleContainer>
-        Happy Job Hunting, #name.
+        Happy Job Hunting, {currentUser.firstName}.
       </TitleContainer>
       <AddFormContainer onSubmit={handleSubmit}>
         <FormInput
@@ -88,7 +89,8 @@ const AddJob = ({isSaving, errors, dispatch}) => {
 
 const mapStateToProps = createStructuredSelector({
   isSaving: selectIsSaving,
-  errors: selectErrorsSaving
+  errors: selectErrorsSaving,
+  currentUser: selectCurrentUser
 });
 
 export default connect(mapStateToProps)(AddJob);

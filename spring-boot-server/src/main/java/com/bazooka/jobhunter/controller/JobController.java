@@ -1,6 +1,6 @@
 package com.bazooka.jobhunter.controller;
 
-import java.util.List;
+import java.security.Principal;
 
 import javax.validation.Valid;
 
@@ -33,40 +33,40 @@ public class JobController {
 	private EntityValidationService entityValidationService;
 	
 	@GetMapping("/jobs")
-	public List<Job> getAll() {
-		return jobService.findAll();
+	public Iterable<Job> getAll(Principal principal) {
+		return jobService.findAll(principal.getName());
 	}
 	
 	@GetMapping("/jobs/{jobId}")
-	public ResponseEntity<Job> getJobById(@PathVariable long jobId) {
-		Job job = jobService.findById(jobId);
+	public ResponseEntity<Job> getJobById(@PathVariable long jobId, Principal principal) {
+		Job job = jobService.findById(jobId, principal.getName());
 		return ResponseEntity.ok().body(job);
 	}
 	
 	@PostMapping("/jobs")
-	public ResponseEntity<?> addJob(@Valid @RequestBody Job job, BindingResult result) {
+	public ResponseEntity<?> addJob(@Valid @RequestBody Job job, BindingResult result, Principal principal) {
 		if (result.hasErrors()) {
 			return entityValidationService.validateFields(result);
 		} else {
 			job.setId(0);
-			Job newJob = jobService.save(job);
+			Job newJob = jobService.save(job, principal.getName());
 			return ResponseEntity.ok().body(newJob);
 		}
 	}
 
 	@PutMapping("/jobs")
-	public ResponseEntity<?> updateJob(@Valid @RequestBody Job job, BindingResult result) {
+	public ResponseEntity<?> updateJob(@Valid @RequestBody Job job, BindingResult result, Principal principal) {
 		if (result.hasErrors()) {
 			return entityValidationService.validateFields(result);
 		} else {
-			Job updatedJob = jobService.save(job);
+			Job updatedJob = jobService.save(job, principal.getName());
 			return ResponseEntity.ok().body(updatedJob);
 		}
 	}
 	
 	@DeleteMapping("/jobs/{jobId}")
-	public ResponseEntity<String> deleteJob(@PathVariable long jobId) {
-		jobService.deleteById(jobId);
+	public ResponseEntity<String> deleteJob(@PathVariable long jobId, Principal principal) {
+		jobService.deleteById(jobId, principal.getName());
 		return ResponseEntity.ok().body("Job with id " + " was deleted.");
 	}
 }
