@@ -85,6 +85,14 @@ public class Note {
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
 	}
+
+	public Job getJob() {
+		return job;
+	}
+
+	public void setJob(Job job) {
+		this.job = job;
+	}
 	
 	@PrePersist
 	protected void onCreate() {
@@ -95,14 +103,6 @@ public class Note {
 	@PreUpdate
 	protected void onUpdate() {
 		this.updatedAt = new Date();
-	}
-
-	public Job getJob() {
-		return job;
-	}
-
-	public void setJob(Job job) {
-		this.job = job;
 	}
 
 }

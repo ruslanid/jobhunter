@@ -31,7 +31,6 @@ function App({dispatch, currentUser}) {
           render={() => currentUser ? (<ProfilePage />) : (<Redirect to="/sign-in" />)}
         />
         <Route
-          exact
           path="/jobs"
           render={() => currentUser ? (<JobsPage />) : (<Redirect to="/sign-in" />)}
         />

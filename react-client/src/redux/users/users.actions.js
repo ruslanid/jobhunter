@@ -1,6 +1,7 @@
 import UsersActionTypes from './users.types';
 import axios from 'axios';
 import jwt_decode from 'jwt-decode';
+import setJwtInHeader from './usersUtils';
 
 //
 // SAVE USER (SIGN UP AND UPDATE)
@@ -58,6 +59,7 @@ export const signinUser = (user, history) => {
       const decoded_jwt = jwt_decode(token);
       dispatch(setCurrentUserSuccess(decoded_jwt));
       localStorage.setItem("token", token);
+      setJwtInHeader(token);
       history.push("/");
     })
     .catch(error => {
@@ -72,13 +74,14 @@ const removeCurrentUser = () => ({
 
 export const setCurrentUserFromLocalStorage = () => {
   return dispatch => {
-    const jwt = localStorage.token;
-    if (jwt) {
-      const decoded_jwt = jwt_decode(jwt);
+    const token = localStorage.token;
+    if (token) {
+      const decoded_jwt = jwt_decode(token);
       if (decoded_jwt.exp < (Date.now() / 1000)) {
         localStorage.removeItem("token");
         dispatch(removeCurrentUser());
       } else {
+        setJwtInHeader(token);
         dispatch(setCurrentUserSuccess(decoded_jwt));
       }
     }
