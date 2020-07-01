@@ -87,3 +87,10 @@ export const setCurrentUserFromLocalStorage = () => {
     }
   }
 };
+
+export const signoutUser = () => {
+  return dispatch => {
+    localStorage.removeItem("token");
+    dispatch(removeCurrentUser());
+  }
+};
