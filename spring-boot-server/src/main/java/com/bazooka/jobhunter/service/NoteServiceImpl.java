@@ -19,36 +19,35 @@ public class NoteServiceImpl implements NoteService {
 	
 	@Autowired
 	private JobRepository jobRepository;
+	
+	@Autowired
+	private JobService jobService;
 
 	@Override
-	public Note findByIdAndJobId(long id, long jobId) {
-		return findNoteByIdAndJobId(id, jobId);
+	public Note findNote(long id, long jobId, String username) {
+		Job job = jobService.findJob(jobId, username);
+		return findNoteByIdAndJob(id, job);
 	}
 	
 	@Override
-	public Note save(Note note, long jobId) {
-		Optional<Job> result = jobRepository.findById(jobId);
-		
-		if (result.isEmpty()) {
-			throw new ResourceNotFoundException("Job with id " + jobId + " does not exist");
-		}
-		
-		Job job = result.get();
+	public Note save(Note note, long jobId, String username) {
+		Job job = jobService.findJob(jobId, username);
 		note.setJob(job);
 		return noteRepository.save(note);
 	}
 
 	@Override
-	public void delete(long noteId, long jobId) {
-		Note note = findNoteByIdAndJobId(noteId, jobId);
+	public void delete(long noteId, long jobId, String username) {
+		Job job = jobService.findJob(jobId, username);
+		Note note = findNoteByIdAndJob(noteId, job);
 		noteRepository.delete(note);
 	}
 	
-	private Note findNoteByIdAndJobId(long id, long jobId) {
-		Optional<Note> result = noteRepository.findByIdAndJobId(id, jobId);
+	private Note findNoteByIdAndJob(long id, Job job) {
+		Optional<Note> result = noteRepository.findByIdAndJob(id, job);
 		
 		if (result.isEmpty()) {
-			throw new ResourceNotFoundException("Note with id " + id + " does not exists");
+			throw new ResourceNotFoundException("Note with id " + id + " does not exist for this job");
 		}
 		
 		return result.get();

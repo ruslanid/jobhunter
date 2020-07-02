@@ -4,10 +4,10 @@ import com.bazooka.jobhunter.entity.Note;
 
 public interface NoteService {
 	
-	Note findByIdAndJobId(long id, long jobId);
+	Note findNote(long id, long jobId, String username);
 
-	Note save(Note note, long jobId);
+	Note save(Note note, long jobId, String username);
 
-	void delete(long noteId, long jobId);
+	void delete(long noteId, long jobId, String username);
 
 }

@@ -27,7 +27,7 @@ public class JobServiceImpl implements JobService {
 	}
 
 	@Override
-	public Job findById(long id, String username) {
+	public Job findJob(long id, String username) {
 		User user = findUser(username);
 		return findJobByIdAndUser(id, user);
 	}
@@ -40,7 +40,7 @@ public class JobServiceImpl implements JobService {
 	}
 
 	@Override
-	public void deleteById(long id, String username) {
+	public void delete(long id, String username) {
 		User user = findUser(username);
 		Job job = findJobByIdAndUser(id, user);
 		jobRepository.delete(job);
@@ -50,7 +50,7 @@ public class JobServiceImpl implements JobService {
 		Optional<Job> result = jobRepository.findByIdAndUser(id, user);
 		
 		if (result.isEmpty()) {
-			throw new ResourceNotFoundException("Job with id " + id + " does not exist");
+			throw new ResourceNotFoundException("Job with id " + id + " does not exist in your account");
 		}
 		
 		return result.get();

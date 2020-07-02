@@ -26,7 +26,7 @@ export const ProfileHeaderContainer = styled.h1`
   }
 `;
 
-export const DeleteButtonContainer = styled.div`
+export const DeleteButtonsContainer = styled.div`
   width: 30%;
   margin: 0px auto 60px;
 

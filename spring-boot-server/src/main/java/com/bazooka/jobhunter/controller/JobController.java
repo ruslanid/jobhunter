@@ -38,13 +38,15 @@ public class JobController {
 	}
 	
 	@GetMapping("/jobs/{jobId}")
-	public ResponseEntity<Job> getJobById(@PathVariable long jobId, Principal principal) {
-		Job job = jobService.findById(jobId, principal.getName());
+	public ResponseEntity<Job> getJob(@PathVariable long jobId, Principal principal) {
+		Job job = jobService.findJob(jobId, principal.getName());
 		return ResponseEntity.ok().body(job);
 	}
 	
 	@PostMapping("/jobs")
-	public ResponseEntity<?> addJob(@Valid @RequestBody Job job, BindingResult result, Principal principal) {
+	public ResponseEntity<?> addJob(
+			@Valid @RequestBody Job job, BindingResult result, Principal principal) {
+
 		if (result.hasErrors()) {
 			return entityValidationService.validateFields(result);
 		} else {
@@ -55,7 +57,9 @@ public class JobController {
 	}
 
 	@PutMapping("/jobs")
-	public ResponseEntity<?> updateJob(@Valid @RequestBody Job job, BindingResult result, Principal principal) {
+	public ResponseEntity<?> updateJob(
+			@Valid @RequestBody Job job, BindingResult result, Principal principal) {
+
 		if (result.hasErrors()) {
 			return entityValidationService.validateFields(result);
 		} else {
@@ -66,7 +70,7 @@ public class JobController {
 	
 	@DeleteMapping("/jobs/{jobId}")
 	public ResponseEntity<String> deleteJob(@PathVariable long jobId, Principal principal) {
-		jobService.deleteById(jobId, principal.getName());
-		return ResponseEntity.ok().body("Job with id " + " was deleted.");
+		jobService.delete(jobId, principal.getName());
+		return ResponseEntity.ok().body("Job has been deleted.");
 	}
 }

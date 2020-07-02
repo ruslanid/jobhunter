@@ -1,5 +1,7 @@
 package com.bazooka.jobhunter.controller;
 
+import java.security.Principal;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,42 +33,44 @@ public class NoteController {
 	private EntityValidationService entityValidationService;
 	
 	@GetMapping("/jobs/{jobId}/notes/{noteId}")
-	public ResponseEntity<Note> getNoteByIdandJobId(@PathVariable long jobId, @PathVariable long noteId) {
-		Note note = noteService.findByIdAndJobId(noteId, jobId);
+	public ResponseEntity<Note> getNote(
+			@PathVariable long jobId, @PathVariable long noteId, Principal principal) {
+		
+		Note note = noteService.findNote(noteId, jobId, principal.getName());
 		return ResponseEntity.ok().body(note);
 	}
 	
 	@PostMapping("/jobs/{jobId}/notes")
 	public ResponseEntity<?> addNote(
-			@PathVariable long jobId,
-			@Valid @RequestBody Note note, BindingResult result) {
+			@PathVariable long jobId, @Valid @RequestBody Note note, BindingResult result, Principal principal) {
 		
 		if (result.hasErrors()) {
 			return entityValidationService.validateFields(result);
 		} else {
 			note.setId(0);
-			Note newNote = noteService.save(note, jobId);
+			Note newNote = noteService.save(note, jobId, principal.getName());
 			return ResponseEntity.ok().body(newNote);
 		}
 	}
 	
 	@PutMapping("/jobs/{jobId}/notes")
 	public ResponseEntity<?> updateNote(
-			@PathVariable long jobId,
-			@Valid @RequestBody Note note, BindingResult result) {
+			@PathVariable long jobId, @Valid @RequestBody Note note, BindingResult result, Principal principal) {
 		
 		if (result.hasErrors()) {
 			return entityValidationService.validateFields(result);
 		} else {
-			Note updatedNote = noteService.save(note, jobId);
+			Note updatedNote = noteService.save(note, jobId, principal.getName());
 			return ResponseEntity.ok().body(updatedNote);
 		}
 	}
 	
 	@DeleteMapping("/jobs/{jobId}/notes/{noteId}")
-	public ResponseEntity<String> deleteJob(@PathVariable long jobId, @PathVariable long noteId) {
-		noteService.delete(noteId, jobId);
-		return ResponseEntity.ok().body("Note with id " + noteId + " has been deleted");
+	public ResponseEntity<String> deleteNote(
+			@PathVariable long jobId, @PathVariable long noteId, Principal principal) {
+		
+		noteService.delete(noteId, jobId, principal.getName());
+		return ResponseEntity.ok().body("Note has been deleted");
 	}
 
 }

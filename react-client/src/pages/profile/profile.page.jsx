@@ -5,7 +5,7 @@ import {createStructuredSelector} from 'reselect';
 import {
   ProfileHeaderContainer,
   UpdateProfileFormContainer,
-  DeleteButtonContainer
+  DeleteButtonsContainer
 } from './profile.styles';
 
 import BackToLink from '../../components/back-to-link/back-to-link.component';
@@ -60,10 +60,10 @@ const ProfilePage = ({currentUser}) => {
         />
         <CustomButton type="submit">Save Profile</CustomButton>
       </UpdateProfileFormContainer>
-      <DeleteButtonContainer>
+      <DeleteButtonsContainer>
         <CustomButton type="submit" removeButton>Remove All Jobs</CustomButton>
         <CustomButton type="submit" removeButton>Delete My Profile</CustomButton>
-      </DeleteButtonContainer>
+      </DeleteButtonsContainer>
     </div>
   )
 };
