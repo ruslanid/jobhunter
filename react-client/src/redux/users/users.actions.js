@@ -72,7 +72,7 @@ const removeCurrentUser = () => ({
   type: UsersActionTypes.REMOVE_CURRENT_USER
 });
 
-export const setCurrentUserFromLocalStorage = () => {
+export const verifyCurrentUser = () => {
   return dispatch => {
     const token = localStorage.token;
     if (token) {
