@@ -28,14 +28,16 @@ export const addJob = job => {
   }
 };
 
-export const updateJob = (job, history) => {
+export const updateJob = (job, history = null) => {
   return dispatch => {
     dispatch(saveJobStart());
 
     axios.put('/api/jobs', job)
     .then(res => {
       dispatch(saveJobSuccess(res.data));
-      history.push(`/jobs/${job.id}`);
+      if (history) {
+        history.push(`/jobs/${job.id}`);
+      }
     })
     .catch(error => dispatch(saveJobFailure(error.response.data)))
   }

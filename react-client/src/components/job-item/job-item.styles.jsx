@@ -6,6 +6,9 @@ export const JobItemContainer = styled.div`
   border-radius: 5px;
   margin-top: 15px;
   background-color: #F9F9F9;
+`;
+
+export const DetailsContainer = styled.div`
   cursor: pointer;
 `;
 
@@ -22,5 +25,11 @@ export const PositionContainer = styled.p`
 `;
 
 export const LocationContainer = styled.p`
-  font-size: 15px;
+  font-size: 16px;
+`;
+
+export const MoveContainer = styled.p`
+  font-size: 12px;
+  color: gray;
+  cursor: pointer;
 `;
