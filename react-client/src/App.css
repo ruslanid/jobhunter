@@ -14,3 +14,7 @@ button:focus {
 * {
   box-sizing: border-box;
 }
+
+input[type=text]:disabled {
+  background: #dddddd;
+}

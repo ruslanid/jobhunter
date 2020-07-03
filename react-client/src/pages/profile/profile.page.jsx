@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import {withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {createStructuredSelector} from 'reselect';
 
@@ -12,9 +13,10 @@ import BackToLink from '../../components/back-to-link/back-to-link.component';
 import FormInput from '../../components/form-input/form-input.component';
 import CustomButton from '../../components/custom-button/custom-button.component';
 
-import { selectCurrentUser } from '../../redux/users/users.selectors';
+import { selectCurrentUser, selectErrorsSaving } from '../../redux/users/users.selectors';
+import { updateUser } from '../../redux/users/users.actions';
 
-const ProfilePage = ({currentUser}) => {
+const ProfilePage = ({currentUser, dispatch, errors, history}) => {
 
   const {id, firstName, lastName, username} = currentUser;
 
@@ -25,6 +27,7 @@ const ProfilePage = ({currentUser}) => {
   const handleSubmit = event => {
     event.preventDefault();
     const editedUser = {...userDetails};
+    dispatch(updateUser(editedUser, history));
   };
 
   const handleChange = event => {
@@ -43,6 +46,7 @@ const ProfilePage = ({currentUser}) => {
           placeholder="First Name"
           value={userDetails.firstName}
           handleChange={handleChange}
+          error={errors.firstName}
         />
         <FormInput
           type="text"
@@ -50,6 +54,7 @@ const ProfilePage = ({currentUser}) => {
           placeholder="Last Name"
           value={userDetails.lastName}
           handleChange={handleChange}
+          error={errors.lastName}
         />
         <FormInput
           type="text"
@@ -57,6 +62,8 @@ const ProfilePage = ({currentUser}) => {
           placeholder="Email"
           value={userDetails.username}
           handleChange={handleChange}
+          error={errors.username}
+          disabled
         />
         <CustomButton type="submit">Save Profile</CustomButton>
       </UpdateProfileFormContainer>
@@ -69,7 +76,8 @@ const ProfilePage = ({currentUser}) => {
 };
 
 const mapStateToProps = createStructuredSelector({
-  currentUser: selectCurrentUser
+  currentUser: selectCurrentUser,
+  errors: selectErrorsSaving
 });
 
-export default connect(mapStateToProps)(ProfilePage);
+export default connect(mapStateToProps)(withRouter(ProfilePage));

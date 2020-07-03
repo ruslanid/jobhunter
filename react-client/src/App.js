@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import {Switch, Route, Redirect} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {createStructuredSelector} from 'reselect';
-import setJwtInHeader from './redux/users/usersUtils';
+import setJwtInHeader from './redux/users/authUtils';
 
 import './App.css';
 

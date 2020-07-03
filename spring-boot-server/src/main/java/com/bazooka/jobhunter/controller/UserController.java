@@ -10,6 +10,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,11 +22,13 @@ import com.bazooka.jobhunter.security.JwtUtils;
 import com.bazooka.jobhunter.service.EntityValidationService;
 import com.bazooka.jobhunter.service.UserServiceImpl;
 import com.bazooka.jobhunter.validator.UserValidator;
+
 import static com.bazooka.jobhunter.security.SecurityConstants.TOKEN_PREFIX;
 
+import java.security.Principal;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/api")
 public class UserController {
 
 	@Autowired
@@ -43,7 +46,7 @@ public class UserController {
 	@Autowired
 	private JwtUtils jwtUtils;
 	
-	@PostMapping("/register")
+	@PostMapping("/users/register")
 	public ResponseEntity<?> registerUser(@Valid @RequestBody User user, BindingResult result) {
 		
 		userValidator.validate(user, result);
@@ -57,7 +60,7 @@ public class UserController {
 		}
 	}
 	
-	@PostMapping("/login")
+	@PostMapping("/users/login")
 	public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest, BindingResult result) {
 
 		if (result.hasErrors()) {
@@ -75,5 +78,16 @@ public class UserController {
 		String jwt = TOKEN_PREFIX + jwtUtils.generateToken(authentication);
 		
 		return ResponseEntity.ok().body(new JwtResponse(jwt));
+	}
+	
+	@PutMapping("/users")
+	public ResponseEntity<?> updateUser(@Valid @RequestBody User user, BindingResult result, Principal principal) {
+		
+		if (result.hasErrors()) {
+			return entityValidationService.validateFields(result);
+		} else {
+			User updatedUser = userServiceImpl.update(user, principal.getName());
+			return ResponseEntity.ok().body(updatedUser);
+		}
 	}
 }

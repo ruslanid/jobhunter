@@ -1,7 +1,7 @@
 import UsersActionTypes from './users.types';
 import axios from 'axios';
 import jwt_decode from 'jwt-decode';
-import setJwtInHeader from './usersUtils';
+import setJwtInHeader from './authUtils';
 
 //
 // SAVE USER (SIGN UP AND UPDATE)
@@ -10,8 +10,9 @@ const saveUserStart = () => ({
   type: UsersActionTypes.SAVE_USER_START
 });
 
-const saveUserSuccess = () => ({
-  type: UsersActionTypes.SAVE_USER_SUCCESS
+const saveUserSuccess = user => ({
+  type: UsersActionTypes.SAVE_USER_SUCCESS,
+  payload: user
 });
 
 const saveUserFailure = error => ({
@@ -25,8 +26,21 @@ export const signupUser = (user, history) => {
 
     axios.post(`/api/users/register`, user)
     .then(res => {
-      dispatch(saveUserSuccess());
+      dispatch(saveUserSuccess(null));
       history.push("/sign-in");
+    })
+    .catch(error => dispatch(saveUserFailure(error.response.data)))
+  }
+};
+
+export const updateUser = (user, history) => {
+  return dispatch => {
+    dispatch(saveUserStart());
+
+    axios.put(`/api/users`, user)
+    .then(res => {
+      dispatch(saveUserSuccess(res.data));
+      history.push("/jobs")
     })
     .catch(error => dispatch(saveUserFailure(error.response.data)))
   }
@@ -82,7 +96,6 @@ export const verifyCurrentUser = () => {
         dispatch(removeCurrentUser());
       } else {
         setJwtInHeader(token);
-        dispatch(setCurrentUserSuccess(decoded_jwt));
       }
     }
   }

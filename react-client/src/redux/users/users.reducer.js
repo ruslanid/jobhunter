@@ -1,5 +1,7 @@
 import UsersActionTypes from './users.types';
 
+import {updateCurrentUser} from './usersUtils';
+
 const INITIAL_STATE = {
   isSaving: false,
   errorsSaving: {},
@@ -19,7 +21,8 @@ const usersReducer = (state = INITIAL_STATE, action) => {
     case UsersActionTypes.SAVE_USER_SUCCESS:
       return {
         ...state,
-        isSaving: false
+        isSaving: false,
+        currentUser: updateCurrentUser(action.payload, state.currentUser)
       }
     case UsersActionTypes.SAVE_USER_FAILURE:
       return {
@@ -37,7 +40,8 @@ const usersReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         isSigningIn: false,
-        currentUser: action.payload
+        currentUser: action.payload,
+        errorsSaving: {}
       }
     case UsersActionTypes.SET_CURRENT_USER_FAILURE:
       return {

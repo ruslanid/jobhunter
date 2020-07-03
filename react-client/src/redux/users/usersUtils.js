@@ -1,12 +1,8 @@
-import axios from 'axios';
-
-const setJwtInHeader = token => {
-  if (token) {
-    axios.defaults.headers.common["Authorization"] = token;
-  } else {
-    delete axios.defaults.headers.common["Authorization"];
+export const updateCurrentUser = (user, currentUser) => {
+  if (currentUser) {
+    const {firstName, lastName, username} = user;
+    return {...currentUser, firstName, lastName, username};
   }
+
+  return null;
 };
-
-export default setJwtInHeader;
-

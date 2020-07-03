@@ -1,10 +1,13 @@
 package com.bazooka.jobhunter.service;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.bazooka.jobhunter.entity.User;
+import com.bazooka.jobhunter.exceptions.ResourceNotFoundException;
 import com.bazooka.jobhunter.exceptions.UsernameAlreadyExistsException;
 import com.bazooka.jobhunter.repository.UserRepository;
 
@@ -27,6 +30,23 @@ public class UserServiceImpl implements UserService {
 			throw new UsernameAlreadyExistsException("An account with this email already exists");
 		}
 
+	}
+
+	@Override
+	public User update(User user, String username) {
+		User dbUser = findUser(username);
+		user.setPassword(dbUser.getPassword());
+		return userRepository.save(user);
+	}
+	
+	private User findUser(String username) {
+		Optional<User> result = userRepository.findByUsername(username);
+		
+		if (result.isEmpty()) {
+			throw new ResourceNotFoundException("User with username " + username + " does not exist");
+		}
+		
+		return result.get();
 	}
 
 }
