@@ -8,7 +8,6 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -56,7 +55,7 @@ public class User implements UserDetails {
 	private Date updatedAt;
 	
 	@OneToMany(mappedBy = "user",
-			   cascade = CascadeType.ALL,
+			   cascade = {CascadeType.REFRESH, CascadeType.REMOVE},
 			   orphanRemoval = true)
 	private List<Job> jobs = new ArrayList<>();
 	
@@ -134,6 +133,10 @@ public class User implements UserDetails {
 
 	public void setJobs(List<Job> jobs) {
 		this.jobs = jobs;
+	}
+	
+	public void removeJob(Job job) {
+		this.jobs.remove(job);
 	}
 
 	@PrePersist

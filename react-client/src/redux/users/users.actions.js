@@ -33,14 +33,13 @@ export const signupUser = (user, history) => {
   }
 };
 
-export const updateUser = (user, history) => {
+export const updateUser = (user) => {
   return dispatch => {
     dispatch(saveUserStart());
 
     axios.put(`/api/users`, user)
     .then(res => {
       dispatch(saveUserSuccess(res.data));
-      history.push("/jobs")
     })
     .catch(error => dispatch(saveUserFailure(error.response.data)))
   }

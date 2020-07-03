@@ -13,9 +13,11 @@ const INITIAL_STATE = {
   job: null,
   isSaving: false,
   isDeleting: false,
+  isDeletingAll: false,
   errorsSaving: {},
   errorsFetching: {},
-  errorsDeleting: {}
+  errorsDeleting: {},
+  errorsDeletingAll: {}
 };
 
 const jobsReducer = (state = INITIAL_STATE, action) => {
@@ -84,6 +86,23 @@ const jobsReducer = (state = INITIAL_STATE, action) => {
         ...state,
         isDeleting: false,
         errorsDeleting: action.payload
+      }
+    case JobsActionTypes.DELETE_ALL_JOBS_START:
+      return {
+        ...state,
+        isDeletingAll: true
+      }
+    case JobsActionTypes.DELETE_ALL_JOBS_SUCCESS:
+      return {
+        ...state,
+        isDeletingAll: false,
+        allJobs: []
+      }
+    case JobsActionTypes.DELETE_ALL_JOBS_FAILURE:
+      return {
+        ...state,
+        isDeletingAll: false,
+        errorsDeletingAll: action.payload
       }
     case NotesActionTypes.SAVE_NOTE_SUCCESS:
       return {

@@ -73,4 +73,11 @@ public class JobController {
 		jobService.delete(jobId, principal.getName());
 		return ResponseEntity.ok().body("Job has been deleted.");
 	}
+	
+	@DeleteMapping("/jobs/all")
+	public ResponseEntity<String> deleteAllJobs(Principal principal) {
+		jobService.deleteAll(principal.getName());
+		return ResponseEntity.ok().body("All jobs have been deleted");
+		
+	}
 }

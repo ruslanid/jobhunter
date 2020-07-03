@@ -53,3 +53,8 @@ export const selectIsDeleting = createSelector(
   [selectJobs],
   jobs => jobs.isDeleting
 );
+
+export const selectIsDeletingAllJobs = createSelector(
+  [selectJobs],
+  jobs => jobs.isDeletingAll
+)

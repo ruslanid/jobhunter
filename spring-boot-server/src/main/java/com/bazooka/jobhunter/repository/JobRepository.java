@@ -1,5 +1,6 @@
 package com.bazooka.jobhunter.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.repository.CrudRepository;

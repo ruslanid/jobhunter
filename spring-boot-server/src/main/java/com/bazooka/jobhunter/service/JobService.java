@@ -12,4 +12,6 @@ public interface JobService {
 	
 	public void delete(long id, String username);
 
+	public void deleteAll(String username);
+
 }

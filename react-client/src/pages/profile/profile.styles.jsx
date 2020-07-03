@@ -38,3 +38,12 @@ export const DeleteButtonsContainer = styled.div`
     width: 80%;
   }
 `;
+
+export const LoaderContainer = styled.div`
+  height: 40px;
+  width: 100%;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;

@@ -121,3 +121,32 @@ export const deleteJob = (jobId, history) => {
     .catch(error => dispatch(deleteJobFailure(error.response.data)))
   }
 };
+
+//
+// DELETE ALL JOBS
+//
+const deleteAllJobsStart = () => ({
+  type: JobsActionTypes.DELETE_ALL_JOBS_START
+});
+
+const deleteAllJobsSuccess = () => ({
+  type: JobsActionTypes.DELETE_ALL_JOBS_SUCCESS
+});
+
+const deleteAllJobsFailure = error => ({
+  type: JobsActionTypes.DELETE_ALL_JOBS_FAILURE,
+  payload: error
+});
+
+export const deleteAllJobs = (history) => {
+  return dispatch => {
+    dispatch(deleteAllJobsStart());
+
+    axios.delete(`/api/jobs/all`)
+    .then(res => {
+      dispatch(deleteAllJobsSuccess());
+      history.push("/jobs");
+    })
+    .catch(error => dispatch(deleteAllJobsFailure(error.response.data)));
+  }
+};

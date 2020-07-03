@@ -1,5 +1,7 @@
 package com.bazooka.jobhunter.service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +46,18 @@ public class JobServiceImpl implements JobService {
 		User user = findUser(username);
 		Job job = findJobByIdAndUser(id, user);
 		jobRepository.delete(job);
+	}
+	
+	@Override
+	public void deleteAll(String username) {
+		User user = findUser(username);
+		List<Job> jobs = user.getJobs();
+		
+		System.out.println(jobs.size());
+
+		for (Job job : jobs) {
+			jobRepository.delete(job);
+		}
 	}
 	
 	private Job findJobByIdAndUser(long id, User user) {
