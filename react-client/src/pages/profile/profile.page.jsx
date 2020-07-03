@@ -5,6 +5,7 @@ import {createStructuredSelector} from 'reselect';
 import MoonLoader from "react-spinners/MoonLoader";
 
 import {
+  ProfilePageContainer,
   ProfileHeaderContainer,
   UpdateProfileFormContainer,
   LoaderContainer,
@@ -45,7 +46,7 @@ const ProfilePage = ({currentUser, dispatch, errors, history, isSaving, isDeleti
   };
   
   return (
-    <div className="profile-page">
+    <ProfilePageContainer>
       <BackToLink to="/jobs" destination="Dashboard" />
       <UpdateProfileFormContainer onSubmit={handleSubmit}>
         <ProfileHeaderContainer>{firstName}'s Profile</ProfileHeaderContainer>
@@ -109,7 +110,7 @@ const ProfilePage = ({currentUser, dispatch, errors, history, isSaving, isDeleti
           </CustomButton>)
         }
       </DeleteButtonsContainer>
-    </div>
+    </ProfilePageContainer>
   )
 };
 

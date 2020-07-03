@@ -1,5 +1,9 @@
 import styled from 'styled-components';
 
+export const ProfilePageContainer = styled.div`
+  margin-bottom: 120px;
+`;
+
 export const UpdateProfileFormContainer = styled.form`
   width: 30%;
   margin: 40px auto 0;
@@ -28,7 +32,7 @@ export const ProfileHeaderContainer = styled.h1`
 
 export const DeleteButtonsContainer = styled.div`
   width: 30%;
-  margin: 0px auto 60px;
+  margin: 0px auto;
 
   @media (max-width: 1200px) {
     width: 40%;

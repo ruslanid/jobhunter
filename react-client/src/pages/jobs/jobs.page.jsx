@@ -3,6 +3,8 @@ import {Switch, Route, withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {createStructuredSelector} from 'reselect';
 
+import {JobsPageContainer} from './jobs.styles';
+
 import JobPage from '../../pages/job/job.page';
 
 import Dashboard from '../../components/dashboard/dashboard.component';
@@ -20,7 +22,7 @@ const JobsPage = ({areJobsLoaded, dispatch, match})  => {
   }, []);
 
   return (
-    <div className="jobs-page">
+    <JobsPageContainer>
       <Switch>
         <Route path={`${match.path}/:jobId`} component={JobPage} />
         <Route
@@ -28,7 +30,7 @@ const JobsPage = ({areJobsLoaded, dispatch, match})  => {
           render={(props) => <DashboardWithLoading isLoading={!areJobsLoaded} {...props} />}
         />
       </Switch>
-    </div>
+    </JobsPageContainer>
   )
 };
 

@@ -1,5 +1,15 @@
 body {
-  font-family: 'Muli', sans-serif; 
+  font-family: 'Muli', sans-serif;
+  height: 100%;
+  position: relative;
+}
+
+.page-content {
+  min-height: 100vh;
+ overflow: hidden;
+ display: block;
+ position: relative;
+ padding-bottom: 50px;
 }
 
 a {
@@ -13,6 +23,11 @@ button:focus {
 
 * {
   box-sizing: border-box;
+}
+
+*:before,
+*:after {
+ box-sizing: border-box;
 }
 
 input[type=text]:disabled {
