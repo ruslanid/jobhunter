@@ -26,3 +26,8 @@ export const selectErrorsSigningIn = createSelector(
   [selectUsers],
   users => users.errorsSigningIn
 );
+
+export const selectIsDeletingUser = createSelector(
+  [selectUsers],
+  users => users.isDeleting
+);

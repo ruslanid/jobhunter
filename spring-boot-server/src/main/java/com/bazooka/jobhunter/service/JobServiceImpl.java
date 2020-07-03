@@ -52,8 +52,6 @@ public class JobServiceImpl implements JobService {
 	public void deleteAll(String username) {
 		User user = findUser(username);
 		List<Job> jobs = user.getJobs();
-		
-		System.out.println(jobs.size());
 
 		for (Job job : jobs) {
 			jobRepository.delete(job);

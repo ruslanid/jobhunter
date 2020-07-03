@@ -18,13 +18,14 @@ import CustomButton from '../../components/custom-button/custom-button.component
 import {
   selectCurrentUser,
   selectErrorsSaving,
-  selectIsSaving
+  selectIsSaving,
+  selectIsDeletingUser
 } from '../../redux/users/users.selectors';
-import {selectIsDeletingAllJobs} from '../../redux/jobs/jobs.selectors';
-import { updateUser } from '../../redux/users/users.actions';
+import { selectIsDeletingAllJobs } from '../../redux/jobs/jobs.selectors';
+import { updateUser, deleteUser } from '../../redux/users/users.actions';
 import { deleteAllJobs } from '../../redux/jobs/jobs.actions';
 
-const ProfilePage = ({currentUser, dispatch, errors, history, isSaving, isDeletingAllJobs}) => {
+const ProfilePage = ({currentUser, dispatch, errors, history, isSaving, isDeletingAllJobs, isDeletingUser}) => {
 
   const {id, firstName, lastName, username} = currentUser;
 
@@ -95,7 +96,18 @@ const ProfilePage = ({currentUser, dispatch, errors, history, isSaving, isDeleti
               Remove All Jobs
           </CustomButton>)
         }
-        <CustomButton removeButton>Delete My Profile</CustomButton>
+        {
+          isDeletingUser ?
+          (<LoaderContainer>
+            <MoonLoader size={30} color={"gray"} />
+          </LoaderContainer>)
+          :
+          (<CustomButton
+            onClick={() => dispatch(deleteUser(history))}
+            removeButton>
+              Delete My Profile
+          </CustomButton>)
+        }
       </DeleteButtonsContainer>
     </div>
   )
@@ -105,7 +117,8 @@ const mapStateToProps = createStructuredSelector({
   currentUser: selectCurrentUser,
   errors: selectErrorsSaving,
   isSaving: selectIsSaving,
-  isDeletingAllJobs: selectIsDeletingAllJobs
+  isDeletingAllJobs: selectIsDeletingAllJobs,
+  isDeletingUser: selectIsDeletingUser
 });
 
 export default connect(mapStateToProps)(withRouter(ProfilePage));

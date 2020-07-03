@@ -7,7 +7,9 @@ const INITIAL_STATE = {
   errorsSaving: {},
   currentUser: null,
   isSigningIn: false,
-  errorsSigningIn: {}
+  errorsSigningIn: {},
+  isDeleting: false,
+  errorsDeleting: {}
 };
 
 const usersReducer = (state = INITIAL_STATE, action) => {
@@ -16,7 +18,8 @@ const usersReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         isSaving: true,
-        errorsSaving: {}
+        errorsSaving: {},
+        errorsSigningIn: {}
       }
     case UsersActionTypes.SAVE_USER_SUCCESS:
       return {
@@ -49,10 +52,22 @@ const usersReducer = (state = INITIAL_STATE, action) => {
         isSigningIn: false,
         errorsSigningIn: action.payload
       }
-    case UsersActionTypes.REMOVE_CURRENT_USER:
+    case UsersActionTypes.DELETE_CURRENT_USER_START:
       return {
         ...state,
+        isDeleting: true
+      }
+    case UsersActionTypes.DELETE_CURRENT_USER_SUCCESS:
+      return {
+        ...state,
+        isDeleting: false,
         currentUser: null
+      }
+    case UsersActionTypes.DELETE_CURRENT_USER_FAILURE:
+      return {
+        ...state,
+        isDeleting: false,
+        errorsDeleting: action.payload
       }
     default:
       return state;

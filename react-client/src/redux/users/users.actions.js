@@ -81,9 +81,35 @@ export const signinUser = (user, history) => {
   }
 };
 
-const removeCurrentUser = () => ({
-  type: UsersActionTypes.REMOVE_CURRENT_USER
+//
+// DELETE USER
+//
+const deleteCurrentUserStart = () => ({
+  type: UsersActionTypes.DELETE_CURRENT_USER_START
 });
+
+const deleteCurrentUserSuccess = () => ({
+  type: UsersActionTypes.DELETE_CURRENT_USER_SUCCESS
+});
+
+const deleteCurrentUserFailure = error => ({
+  type: UsersActionTypes.DELETE_CURRENT_USER_FAILURE,
+  payload: error
+});
+
+export const deleteUser = history => {
+  return dispatch => {
+    dispatch(deleteCurrentUserStart());
+
+    axios.delete('api/users')
+    .then(res => {
+      localStorage.removeItem("token");
+      dispatch(deleteCurrentUserSuccess());
+      history.push("/sign-in");
+    })
+    .catch(error => dispatch(deleteCurrentUserFailure(error.reponse.data)))
+  }
+}
 
 export const verifyCurrentUser = () => {
   return dispatch => {
@@ -92,7 +118,7 @@ export const verifyCurrentUser = () => {
       const decoded_jwt = jwt_decode(token);
       if (decoded_jwt.exp < (Date.now() / 1000)) {
         localStorage.removeItem("token");
-        dispatch(removeCurrentUser());
+        dispatch(deleteCurrentUserSuccess());
       } else {
         setJwtInHeader(token);
       }
@@ -103,6 +129,6 @@ export const verifyCurrentUser = () => {
 export const signoutUser = () => {
   return dispatch => {
     localStorage.removeItem("token");
-    dispatch(removeCurrentUser());
+    dispatch(deleteCurrentUserSuccess());
   }
 };

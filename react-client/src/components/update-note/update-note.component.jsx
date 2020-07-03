@@ -95,7 +95,7 @@ const UpdateNote = ({note, dispatch, history, errors, isSaving, isDeleting}) => 
         </LoaderContainer>)
         :
         (<DeleteButtonContainer>
-          <CustomButton onClick={() => dispatch(deleteNote(note.job.id, note.id, history))} removeButton>Delete Job</CustomButton>
+          <CustomButton onClick={() => dispatch(deleteNote(note.job.id, note.id, history))} removeButton>Delete Note</CustomButton>
         </DeleteButtonContainer>)
       }
     </div>

@@ -77,7 +77,7 @@ public class JobController {
 	@DeleteMapping("/jobs/all")
 	public ResponseEntity<String> deleteAllJobs(Principal principal) {
 		jobService.deleteAll(principal.getName());
-		return ResponseEntity.ok().body("All jobs have been deleted");
+		return ResponseEntity.ok().body("All jobs have been deleted.");
 		
 	}
 }

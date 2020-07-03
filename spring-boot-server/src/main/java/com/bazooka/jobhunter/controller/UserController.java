@@ -9,6 +9,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -35,7 +36,7 @@ public class UserController {
 	private EntityValidationService entityValidationService;
 	
 	@Autowired
-	UserServiceImpl userServiceImpl;
+	UserServiceImpl userService;
 	
 	@Autowired
 	private UserValidator userValidator;
@@ -55,7 +56,7 @@ public class UserController {
 			return entityValidationService.validateFields(result);
 		} else {	
 			user.setId(0);
-			userServiceImpl.save(user);
+			userService.save(user);
 			return ResponseEntity.ok().body("Account created successfully");
 		}
 	}
@@ -86,8 +87,14 @@ public class UserController {
 		if (result.hasErrors()) {
 			return entityValidationService.validateFields(result);
 		} else {
-			User updatedUser = userServiceImpl.update(user, principal.getName());
+			User updatedUser = userService.update(user, principal.getName());
 			return ResponseEntity.ok().body(updatedUser);
 		}
+	}
+	
+	@DeleteMapping("/users")
+	public ResponseEntity<String> deletePrincipal(Principal principal) {
+		userService.delete(principal.getName());
+		return ResponseEntity.ok().body("Your account has been deleted.");
 	}
 }

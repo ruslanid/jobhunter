@@ -135,10 +135,6 @@ public class User implements UserDetails {
 		this.jobs = jobs;
 	}
 	
-	public void removeJob(Job job) {
-		this.jobs.remove(job);
-	}
-
 	@PrePersist
 	protected void onCreate() {
 		this.createdAt = new Date();
