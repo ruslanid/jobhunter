@@ -23,7 +23,7 @@ const setBorder = props => {
 }
 
 export const FormTextareaWrapper = styled.div`
-  margin: 0 0 15px;
+  margin: 0 0 10px;
 `;
 
 export const TextareaContainer = styled.textarea`
@@ -37,7 +37,6 @@ export const TextareaContainer = styled.textarea`
   color: black;
   background-color: white;
   resize: none;
-  margin-bottom: 8px;
 
   &:focus {
     outline: none;
@@ -47,4 +46,5 @@ export const TextareaContainer = styled.textarea`
 export const ErrorContainer = styled.div`
   color: red;
   font-size: 16px;
+  margin-top: 8px;
 `;

@@ -57,7 +57,7 @@ export const FormInputContainer = styled.input`
     background-color: white;
     font-size: 15px;
     padding: 10px;
-    margin-bottom: 8px;
+    // margin-bottom: 8px;
 
     &:focus {
         outline: none;
@@ -71,4 +71,5 @@ export const FormInputContainer = styled.input`
 export const ErrorContainer = styled.div`
     color: red;
     font-size: 16px;
+    margin-top: 8px;
 `;

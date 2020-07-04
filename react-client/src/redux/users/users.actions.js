@@ -28,8 +28,11 @@ export const signupUser = (user, history) => {
     .then(res => {
       dispatch(saveUserSuccess(null));
       history.push("/sign-in");
+      window.flash('Successfully created account. Please sign in.', 'success');
     })
-    .catch(error => dispatch(saveUserFailure(error.response.data)))
+    .catch(error => {
+      dispatch(saveUserFailure(error.response.data));
+    })
   }
 };
 
@@ -40,6 +43,7 @@ export const updateUser = (user) => {
     axios.put(`/api/users`, user)
     .then(res => {
       dispatch(saveUserSuccess(res.data));
+      window.flash('Your profile info has been updated', 'success');
     })
     .catch(error => dispatch(saveUserFailure(error.response.data)))
   }
@@ -106,6 +110,7 @@ export const deleteUser = history => {
       localStorage.removeItem("token");
       dispatch(deleteCurrentUserSuccess());
       history.push("/sign-in");
+      window.flash('You account has been deleted.', 'success');
     })
     .catch(error => dispatch(deleteCurrentUserFailure(error.reponse.data)))
   }

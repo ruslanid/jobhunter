@@ -22,7 +22,7 @@ export const JobFieldContainer = styled.div`
   border-radius: 7px;
   padding: 10px;
   color: gray;
-  margin-top: 5px;
+  margin-bottom: 5px;
   border: 1px solid gray;
   font-size: 18px;
 

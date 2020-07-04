@@ -23,7 +23,10 @@ export const addJob = job => {
     dispatch(saveJobStart());
 
     axios.post('/api/jobs', job)
-    .then(res => dispatch(saveJobSuccess(res.data)))
+    .then(res => {
+      dispatch(saveJobSuccess(res.data));
+      window.flash('New job has been added.', 'success');
+    })
     .catch(error => dispatch(saveJobFailure(error.response.data)))
   }
 };
@@ -146,6 +149,7 @@ export const deleteAllJobs = (history) => {
     .then(res => {
       dispatch(deleteAllJobsSuccess());
       history.push("/jobs");
+      window.flash('All jobs removed.', 'success');
     })
     .catch(error => dispatch(deleteAllJobsFailure(error.response.data)));
   }

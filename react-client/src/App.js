@@ -16,6 +16,8 @@ import SignUpPage from './pages/sign-up/sign-up.page';
 import {selectCurrentUser} from './redux/users/users.selectors';
 import {verifyCurrentUser} from './redux/users/users.actions';
 import Footer from './components/footer/footer.component';
+import FlashMessage from './components/flash-message/flash-message.component';
+import Bus from './Utils/Bus';
 
 function App({dispatch, currentUser}) {
 
@@ -28,9 +30,12 @@ function App({dispatch, currentUser}) {
   if (token) {
     setJwtInHeader(token);
   }
+
+  window.flash = (message, type) => Bus.emit('flash', ({message, type}));
   
   return (
     <div className="App">
+      <FlashMessage />
       <div className="page-content">
         { currentUser ? (<Header />) : null}
         <Switch>
