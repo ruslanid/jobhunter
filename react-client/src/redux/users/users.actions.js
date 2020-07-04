@@ -111,8 +111,16 @@ export const deleteUser = history => {
   }
 }
 
+//
+// VERIFY USER
+//
+const resetUserErrors = () => ({
+  type: UsersActionTypes.RESET_USER_ERRORS
+});
+
 export const verifyCurrentUser = () => {
   return dispatch => {
+    dispatch(resetUserErrors());
     const token = localStorage.token;
     if (token) {
       const decoded_jwt = jwt_decode(token);
@@ -126,6 +134,9 @@ export const verifyCurrentUser = () => {
   }
 };
 
+//
+// SIGN USER OUT
+//
 export const signoutUser = () => {
   return dispatch => {
     localStorage.removeItem("token");

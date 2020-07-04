@@ -69,6 +69,13 @@ const usersReducer = (state = INITIAL_STATE, action) => {
         isDeleting: false,
         errorsDeleting: action.payload
       }
+    case UsersActionTypes.RESET_USER_ERRORS:
+      return {
+        ...state,
+        errorsSaving: {},
+        errorsSigningIn: {},
+        errorsDeleting: {}
+      }
     default:
       return state;
   }
