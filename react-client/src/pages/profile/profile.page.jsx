@@ -15,6 +15,8 @@ import {
 import BackToLink from '../../components/back-to-link/back-to-link.component';
 import FormInput from '../../components/form-input/form-input.component';
 import CustomButton from '../../components/custom-button/custom-button.component';
+import ConfirmDialog from '../../components/confirmation-dialog/confirmation-dialog.component';
+
 
 import {
   selectCurrentUser,
@@ -33,6 +35,9 @@ const ProfilePage = ({currentUser, dispatch, errors, history, isSaving, isDeleti
   const [userDetails, setUserDetails] = useState({
     id, firstName, lastName, username
   });
+
+  const [confirmOpenDeleteJobs, setConfirmOpenDeleteJobs] = useState(false);
+  const [confirmOpenDeleteAccount, setConfirmOpenDeleteAccount] = useState(false);
 
   const handleSubmit = event => {
     event.preventDefault();
@@ -91,11 +96,15 @@ const ProfilePage = ({currentUser, dispatch, errors, history, isSaving, isDeleti
             <MoonLoader size={30} color={"gray"} />
           </LoaderContainer>)
           :
-          (<CustomButton
-            onClick={() => dispatch(deleteAllJobs(history))}
-            removeButton>
-              Remove All Jobs
-          </CustomButton>)
+          (<span>
+            <CustomButton onClick={() => setConfirmOpenDeleteJobs(true)} removeButton>Remove All Jobs</CustomButton>
+            <ConfirmDialog
+              title="Deleting All Jobs"
+              open={confirmOpenDeleteJobs}
+              setOpen={setConfirmOpenDeleteJobs}
+              onConfirm={() => dispatch(deleteAllJobs(history))}
+            />
+          </span>)
         }
         {
           isDeletingUser ?
@@ -103,11 +112,15 @@ const ProfilePage = ({currentUser, dispatch, errors, history, isSaving, isDeleti
             <MoonLoader size={30} color={"gray"} />
           </LoaderContainer>)
           :
-          (<CustomButton
-            onClick={() => dispatch(deleteUser(history))}
-            removeButton>
-              Delete My Profile
-          </CustomButton>)
+          (<span>
+            <CustomButton onClick={() => setConfirmOpenDeleteAccount(true)} removeButton>Delete My Account</CustomButton>
+            <ConfirmDialog
+              title="Deleting Account"
+              open={confirmOpenDeleteAccount}
+              setOpen={setConfirmOpenDeleteAccount}
+              onConfirm={() => dispatch(deleteUser(history))}
+            />
+          </span>)
         }
       </DeleteButtonsContainer>
     </ProfilePageContainer>

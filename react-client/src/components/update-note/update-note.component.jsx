@@ -18,6 +18,7 @@ import JobHeader from '../job-header/job-header.component';
 import FormInput from '../form-input/form-input.component';
 import FormTextarea from '../form-textarea/form-textarea.component';
 import CustomButton from '../custom-button/custom-button.component';
+import ConfirmDialog from '../../components/confirmation-dialog/confirmation-dialog.component';
 
 import {
   selectNote,
@@ -37,6 +38,8 @@ const UpdateNote = ({note, dispatch, history, errors, isSaving, isDeleting}) => 
   const [noteDetails, setNoteDetails] = useState({
     id, title, text
   });
+
+  const [confirmOpen, setConfirmOpen] = useState(false);
 
   const handleSubmit = event => {
     event.preventDefault();
@@ -95,7 +98,13 @@ const UpdateNote = ({note, dispatch, history, errors, isSaving, isDeleting}) => 
         </LoaderContainer>)
         :
         (<DeleteButtonContainer>
-          <CustomButton onClick={() => dispatch(deleteNote(note.job.id, note.id, history))} removeButton>Delete Note</CustomButton>
+          <CustomButton onClick={() => setConfirmOpen(true)} removeButton>Delete Note</CustomButton>
+          <ConfirmDialog
+            title="Deleting Note"
+            open={confirmOpen}
+            setOpen={setConfirmOpen}
+            onConfirm={() => dispatch(deleteNote(note.job.id, note.id, history))}
+          />
         </DeleteButtonContainer>)
       }
     </div>

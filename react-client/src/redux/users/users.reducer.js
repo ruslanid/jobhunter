@@ -74,7 +74,10 @@ const usersReducer = (state = INITIAL_STATE, action) => {
         ...state,
         errorsSaving: {},
         errorsSigningIn: {},
-        errorsDeleting: {}
+        errorsDeleting: {},
+        isSigningIn: false,
+        isSaving: false,
+        isDeleting: false
       }
     default:
       return state;

@@ -15,6 +15,7 @@ import JobHeader from '../../components/job-header/job-header.component';
 import CustomButton from '../../components/custom-button/custom-button.component';
 import FormInput from '../../components/form-input/form-input.component';
 import FormTextarea from '../../components/form-textarea/form-textarea.component';
+import ConfirmDialog from '../../components/confirmation-dialog/confirmation-dialog.component';
 
 import {
   selectJob,
@@ -34,6 +35,8 @@ const JobEditPage = ({job, isSaving, errors, isDeleting, dispatch, history}) => 
   const [jobDetails, setJobDetails] = useState({
     id, category, company, position, location, link, manager, email, phoneNumber, description
   });
+
+  const [confirmOpen, setConfirmOpen] = useState(false);
 
   const handleSubmit = event => {
     event.preventDefault();
@@ -144,7 +147,13 @@ const JobEditPage = ({job, isSaving, errors, isDeleting, dispatch, history}) => 
         </LoaderContainer>)
         :
         (<DeleteButtonContainer>
-          <CustomButton onClick={() => dispatch(deleteJob(jobDetails.id, history))} removeButton>Delete Job</CustomButton>
+          <CustomButton onClick={() => setConfirmOpen(true)} removeButton>Delete Job</CustomButton>
+          <ConfirmDialog
+            title="Deleting Job"
+            open={confirmOpen}
+            setOpen={setConfirmOpen}
+            onConfirm={() => dispatch(deleteJob(jobDetails.id, history))}
+          />
         </DeleteButtonContainer>)
       }
     </div>

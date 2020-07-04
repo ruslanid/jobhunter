@@ -28,7 +28,7 @@ export const signupUser = (user, history) => {
     .then(res => {
       dispatch(saveUserSuccess(null));
       history.push("/sign-in");
-      window.flash('Successfully created account. Please sign in.', 'success');
+      window.flash('Successfully created an account. Please sign in.', 'success');
     })
     .catch(error => {
       dispatch(saveUserFailure(error.response.data));
