@@ -48,7 +48,7 @@ public class Job {
 	
 	private String category = "Interested";
 	
-	@Email
+	@Email(message="Email is invalid")
 	private String email;
 	
 	@Column(name="phone_number")

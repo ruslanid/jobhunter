@@ -113,6 +113,7 @@ const JobEditPage = ({job, isSaving, errors, isDeleting, dispatch, history}) => 
           placeholder="Contact Email"
           value={jobDetails.email  || ''}
           handleChange={handleChange}
+          error={errors.email}
         />
 
         <FormInput

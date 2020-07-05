@@ -110,7 +110,7 @@ export const deleteUser = history => {
       localStorage.removeItem("token");
       dispatch(deleteCurrentUserSuccess());
       history.push("/sign-in");
-      window.flash('You account has been deleted.', 'success');
+      window.flash('Your account has been deleted.', 'success');
     })
     .catch(error => dispatch(deleteCurrentUserFailure(error.reponse.data)))
   }
